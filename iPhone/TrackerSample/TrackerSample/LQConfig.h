@@ -3,6 +3,6 @@
 // enter your API Key and Secret here.
 // https://developers.geoloqi.com/
 
-static NSString *const LQ_APIKey = @"53421e51540f31f37efc5dba26fe4264";
-static NSString *const LQ_APISecret = @"";
-static NSString *const FB_APP_ID = @"286536824758724";
+static NSString *const LQ_APIKey = @"08eeb382fe939f848029ffe964609288";
+static NSString *const LQ_APISecret = @"88310a2672ce35493e240e0cf00efee3";
+static NSString *const FB_APP_ID = @"";

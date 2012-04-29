@@ -9,7 +9,6 @@
 #import "DemoAppDelegate.h"
 
 @implementation SettingsViewController
-
 @synthesize currentTrackingProfile;
 @synthesize currentLocationField, currentLocationActivityIndicator;
 
@@ -38,12 +37,27 @@
 {
     [super viewWillAppear:animated];
     
-    self.currentTrackingProfile.selectedSegmentIndex = [self segmentIndexForTrackingProfile:[[LQTracker sharedTracker] profile]];
+    // self.currentTrackingProfile.selectedSegmentIndex = [self segmentIndexForTrackingProfile:[[LQTracker sharedTracker] profile]];
+
+    // NSURL *url = [NSURL URLWithString:@"https://deals.geoloqi.com/api/categories"];
+    NSURL *url = [NSURL URLWithString:@"http://geoloqi.cc/categories.php"];
+	NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url 
+                                                                cachePolicy:NSURLRequestReloadIgnoringCacheData 
+                                                            timeoutInterval:10.0];
     
-    NSLog(@"Date of last location update: %@", [[LQTracker sharedTracker] dateOfLastLocationUpdate]);
-    if([LQSession savedSession]) {
-        [self getLocationButtonWasTapped:nil];
-    }
+	[request setHTTPMethod:@"POST"];
+    [request setValue:[NSString stringWithFormat:@"Bearer %@", [LQSession savedSession].accessToken] forHTTPHeaderField:@"Authorization"];
+    [[LQSession savedSession] runAPIRequest:request completion:^(NSHTTPURLResponse *response, NSDictionary *responseDictionary, NSError *error) {
+        // On response, store the Geoloqi token and start tracking in passive mode
+        NSLog(@"Response! %@", responseDictionary);
+        if([responseDictionary objectForKey:@"categories"]) {
+            categories = [responseDictionary objectForKey:@"categories"];
+            [tableView reloadData];
+        } else {
+            // Error logging in
+        }
+    }];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -95,54 +109,43 @@
     [[LQTracker sharedTracker] setProfile:[self profileForSegmentIndex:sender.selectedSegmentIndex]];
 }
 
-#pragma mark -
+#pragma mark - UITableViewDelegate
 
-- (IBAction)registerForPushWasTapped:(UIButton *)sender
-{
-    [LQSession registerForPushNotificationsWithCallback:^(NSData *deviceToken, NSError *error) {
-        if(error){
-            NSLog(@"Failed to register for push tokens: %@", error);
-        } else {
-            NSLog(@"Got a push token! %@", deviceToken);
-        }
-    }];
+- (NSMutableDictionary *)getCategoryAtIndexPath:(NSIndexPath *)indexPath {
+    NSMutableDictionary *layer = nil;
+    layer = [[categories objectAtIndex:indexPath.row] mutableCopy];
+    return layer;
 }
 
-- (void)viewRefreshTimerDidFire:(NSTimer *)timer {
-    [self getLocationButtonWasTapped:nil];
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if(categories) {
+        return [categories count];
+    } else {
+        return 0;
+    }
 }
 
-- (IBAction)getLocationButtonWasTapped:(UIButton *)sender
-{
-    // self.currentLocationField.text = @"Loading...";
-    self.currentLocationActivityIndicator.hidden = NO;
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 50.0;
+}
 
-    NSURL *url = [NSURL URLWithString:@"http://everydaycity.com/api/status"];
-	NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url 
-                                                                cachePolicy:NSURLRequestReloadIgnoringCacheData 
-                                                            timeoutInterval:10.0];
-	[request setHTTPMethod:@"GET"];
-    [request setValue:[NSString stringWithFormat:@"Bearer %@", [LQSession savedSession].accessToken] forHTTPHeaderField:@"Authorization"];
+- (UITableViewCell *)tableView:(UITableView *)_tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+	static NSString *myIdentifier = @"MyIdentifier";
+	myIdentifier = @"tblCellView";
+	
+	CategoryCell *cell = (CategoryCell *)[_tableView dequeueReusableCellWithIdentifier:myIdentifier];
     
-	[[LQSession savedSession] runAPIRequest:request completion:^(NSHTTPURLResponse *response, NSDictionary *responseDictionary, NSError *error) {
-		NSLog(@"Response: %@ error:%@", responseDictionary, error);
-        if(error) {
-            self.currentLocationField.text = @"";
-            // If there was an error, set a timer to try updating the view again in a few seconds
-
-            [NSTimer scheduledTimerWithTimeInterval:6.0
-                                             target:self
-                                           selector:@selector(viewRefreshTimerDidFire:)
-                                           userInfo:nil
-                                            repeats:NO];    
-            
-            
-        } else {
-            self.currentLocationField.text = [responseDictionary objectForKey:@"response"];
-        }
-        self.currentLocationActivityIndicator.hidden = YES;
-        
-	}];
+	if(cell == nil) {
+		[[NSBundle mainBundle] loadNibNamed:@"CategoryCell" owner:self options:nil];
+		cell = categoryCell;
+	}
+    
+	NSDictionary *category = [self getCategoryAtIndexPath:indexPath];
+	
+	[cell setLabelText:[category objectForKey:@"name"]];
+    [cell setSubscribedSwitch:[category objectForKey:@"subscribed"]];
+    
+	return cell;
 }
 
 @end

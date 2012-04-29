@@ -59,9 +59,11 @@ DemoAppDelegate *appDelegate;
         [self registerForPushNotifications];
     }
 
+    [LQTracker configureAnonymousUserAccountWithUserInfo:nil profile:LQTrackerProfilePassive];
+    
     // Tell the SDK the app finished launching so it can properly handle push notifications, etc
     [LQSession application:application didFinishLaunchingWithOptions:launchOptions];
-
+    
     return YES;
 }
 

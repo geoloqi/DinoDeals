@@ -32,12 +32,14 @@
     webView.scrollView.bounces = NO;
     
     // Do any additional setup after loading the view from its nib.
-    NSURL *url = [NSURL URLWithString:@"http://127.0.0.1:9800/history"];
+    NSURL *url = [NSURL URLWithString:@"https://deals.geoloqi.com/history"];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url 
                                                                 cachePolicy:NSURLRequestReloadIgnoringCacheData 
                                                             timeoutInterval:10.0];
     [request setValue:[NSString stringWithFormat:@"Bearer %@", [LQSession savedSession].accessToken] forHTTPHeaderField:@"Authorization"];
     [self.webView loadRequest:request];
+    
+    [[LQTracker sharedTracker] setProfile:LQTrackerProfilePassive];
 }
 
 - (void)viewDidUnload

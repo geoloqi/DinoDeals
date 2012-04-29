@@ -6,9 +6,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CategoryCell.h"
 
-@interface SettingsViewController : UIViewController {
-    
+@interface SettingsViewController : UIViewController <UITableViewDelegate, UITableViewDelegate> {
+	IBOutlet UITableView *tableView;
+	IBOutlet CategoryCell *categoryCell;
+	NSArray *categories;
 }
 
 @property (strong) IBOutlet UISegmentedControl *currentTrackingProfile;
@@ -20,5 +23,7 @@
 - (IBAction)getLocationButtonWasTapped:(UIButton *)sender;
 - (IBAction)fbLogoutWasTapped:(UIButton *)sender;
 - (int)segmentIndexForTrackingProfile:(LQTrackerProfile)profile;
+
+- (NSMutableDictionary *)getCategoryAtIndexPath:(NSIndexPath *)indexPath;
 
 @end
