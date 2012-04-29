@@ -8,7 +8,7 @@
 #import <UIKit/UIKit.h>
 #import "FBConnect.h"
 
-@class DemoViewController;
+@class SettingsViewController;
 
 @interface DemoAppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate, UIAlertViewDelegate, FBSessionDelegate> {
     Facebook *facebook;

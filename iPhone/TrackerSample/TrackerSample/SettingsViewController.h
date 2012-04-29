@@ -7,7 +7,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DemoViewController : UIViewController {
+@interface SettingsViewController : UIViewController {
     
 }
 

@@ -5,10 +5,10 @@
 //  Copyright (c) 2012 Geoloqi, Inc. All rights reserved.
 //
 
-#import "DemoViewController.h"
+#import "SettingsViewController.h"
 #import "DemoAppDelegate.h"
 
-@implementation DemoViewController
+@implementation SettingsViewController
 
 @synthesize currentTrackingProfile;
 @synthesize currentLocationField, currentLocationActivityIndicator;
