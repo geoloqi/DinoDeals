@@ -10,6 +10,8 @@ configure do
     config.affiliate_token = CONFIG['sqoot']['affiliate_token']
   end
 
+  set :geoloqi_client_id,     CONFIG['geoloqi']['client_id']
+  set :geoloqi_client_secret, CONFIG['geoloqi']['client_secret']
 end
 
 get '/' do
