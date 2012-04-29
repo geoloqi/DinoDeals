@@ -2,3 +2,10 @@ source :rubygems
 
 gem 'sinatra'
 gem 'sqoot'
+gem 'puma', '>1'
+
+group :development do
+  gem 'shotgun'
+  gem 'debugger'
+  gem 'pry'
+end
