@@ -17,7 +17,11 @@ GEM
       rack (~> 1.1)
     faraday_middleware (0.8.7)
       faraday (>= 0.7.4, < 0.9)
+    geoloqi (0.9.39)
+      faraday (>= 0.6.1)
+      json
     hashie (1.2.0)
+    json (1.6.6)
     method_source (0.7.1)
     multi_json (1.0.4)
     multipart-post (1.1.5)
@@ -36,6 +40,9 @@ GEM
       rack (~> 1.3, >= 1.3.6)
       rack-protection (~> 1.2)
       tilt (~> 1.3, >= 1.3.3)
+    sinatra-geoloqi (0.9.3)
+      geoloqi (>= 0.9.36)
+      sinatra (>= 1.0)
     slop (2.4.4)
     sqoot (0.0.1)
       faraday (~> 0.7.5)
@@ -53,4 +60,5 @@ DEPENDENCIES
   puma (> 1)
   shotgun
   sinatra
+  sinatra-geoloqi
   sqoot

@@ -3,6 +3,7 @@ source :rubygems
 gem 'sinatra'
 gem 'sqoot'
 gem 'puma', '>1'
+gem 'sinatra-geoloqi'
 
 group :development do
   gem 'shotgun'

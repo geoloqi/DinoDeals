@@ -28,6 +28,9 @@ configure do
     "Women's Clothing" => 'womens-clothing'
   }
 
+  set :geoloqi_client_id,     CONFIG['geoloqi']['client_id']
+  set :geoloqi_client_secret, CONFIG['geoloqi']['client_secret']
+
 end
 
 get '/' do
