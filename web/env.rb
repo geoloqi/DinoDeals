@@ -1,3 +1,7 @@
+require 'bundler/setup'
+Bundler.require
+Bundler.require :development if development?
+
 CONFIG = YAML.load_file(File.join(File.dirname(__FILE__), 'config.yml'))
 
 Sqoot.configure do |config|
@@ -21,3 +25,5 @@ CATEGORIES = {
   "Theatre" =>          'theater',
   "Women's Clothing" => 'womens-clothing'
 }
+
+Geoloqi.config :client_id => CONFIG['geoloqi']['client_id'], :client_secret => CONFIG['geoloqi']['client_secret']
