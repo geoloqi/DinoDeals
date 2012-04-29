@@ -27,3 +27,7 @@ CATEGORIES = {
 }
 
 Geoloqi.config :client_id => CONFIG['geoloqi']['client_id'], :client_secret => CONFIG['geoloqi']['client_secret']
+
+def get_layers
+  Geoloqi::Session.new(:access_token => CONFIG['geoloqi']['app_access_token']).get('layer/list')[:layers]
+end
