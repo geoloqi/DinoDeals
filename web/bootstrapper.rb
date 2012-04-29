@@ -4,5 +4,5 @@ geoloqi = Geoloqi::Session.new :access_token => CONFIG['geoloqi']['app_access_to
 
 CATEGORIES.each do |k,v|
   puts "creating layer category for #{k}..."
-  geoloqi.post 'layer/create', {:name => k, :key => v}
+  geoloqi.post 'layer/create', {:name => k, :key => v, :public => 1}
 end
