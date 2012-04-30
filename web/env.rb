@@ -6,6 +6,7 @@ CONFIG = YAML.load_file(File.join(File.dirname(__FILE__), 'config.yml'))
 
 Sqoot.configure do |config|
   config.affiliate_token = CONFIG['sqoot']['affiliate_token']
+  config.authentication_token = 'foo'
 end
 
 CATEGORIES = {
@@ -25,6 +26,9 @@ CATEGORIES = {
   "Theatre" =>          'theater',
   "Women's Clothing" => 'womens-clothing'
 }
+
+DEAL_SEARCH_RADIUS = 10000
+DEAL_PLACE_RADIUS =  800
 
 Geoloqi.config :client_id => CONFIG['geoloqi']['client_id'], :client_secret => CONFIG['geoloqi']['client_secret']
 
