@@ -21,7 +21,6 @@
 
 
 - (IBAction)trackingProfileWasTapped:(UISegmentedControl *)sender;
-- (IBAction)getLocationButtonWasTapped:(UIButton *)sender;
 - (IBAction)fbLogoutWasTapped:(UIButton *)sender;
 - (int)segmentIndexForTrackingProfile:(LQTrackerProfile)profile;
 

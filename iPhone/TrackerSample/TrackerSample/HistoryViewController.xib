@@ -45,6 +45,7 @@
 						<int key="NSvFlags">274</int>
 						<string key="NSFrame">{{0, 101}, {320, 310}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="199735022"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
@@ -62,6 +63,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{278, 3}, {37, 37}}</string>
 								<reference key="NSSuperview" ref="902182054"/>
+								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:225</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -96,6 +98,7 @@
 						</array>
 						<string key="NSFrameSize">{320, 44}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="293411845"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -113,11 +116,12 @@
 							</object>
 						</array>
 					</object>
-					<object class="IBUILabel" id="816645190">
+					<object class="IBUILabel" id="980925736">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{9, 57}, {302, 46}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:328</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -125,7 +129,7 @@
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<string key="IBUIText"/>
-						<object class="NSColor" key="IBUITextColor" id="132354908">
+						<object class="NSColor" key="IBUITextColor" id="484552650">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MCAwIDAAA</bytes>
 						</object>
@@ -143,11 +147,12 @@
 							<int key="NSfFlags">16</int>
 						</object>
 					</object>
-					<object class="IBUILabel" id="976563204">
+					<object class="IBUILabel" id="137572021">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{0, 44}, {320, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -155,7 +160,7 @@
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<string key="IBUIText">Current City</string>
-						<reference key="IBUITextColor" ref="132354908"/>
+						<reference key="IBUITextColor" ref="484552650"/>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">0</int>
 						<float key="IBUIMinimumFontSize">10</float>
@@ -173,6 +178,7 @@
 				</array>
 				<string key="NSFrame">{{0, 20}, {320, 411}}</string>
 				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="902182054"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">10</int>
@@ -260,7 +266,7 @@ AAgACAAIAAEAAQABAAE</bytes>
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">currentCity</string>
 						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="816645190"/>
+						<reference key="destination" ref="980925736"/>
 					</object>
 					<int key="connectionID">13</int>
 				</object>
@@ -288,8 +294,8 @@ AAgACAAIAAEAAQABAAE</bytes>
 						<array class="NSMutableArray" key="children">
 							<reference ref="902182054"/>
 							<reference ref="293411845"/>
-							<reference ref="816645190"/>
-							<reference ref="976563204"/>
+							<reference ref="980925736"/>
+							<reference ref="137572021"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -340,12 +346,12 @@ AAgACAAIAAEAAQABAAE</bytes>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">11</int>
-						<reference key="object" ref="816645190"/>
+						<reference key="object" ref="980925736"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">12</int>
-						<reference key="object" ref="976563204"/>
+						<reference key="object" ref="137572021"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 				</array>
@@ -368,9 +374,45 @@ AAgACAAIAAEAAQABAAE</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">13</int>
+			<int key="maxID">14</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes"/>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">HistoryViewController</string>
+					<string key="superclassName">UIViewController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">reloadWasTapped:</string>
+						<string key="NS.object.0">UIButton</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">reloadWasTapped:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">reloadWasTapped:</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+					</object>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="currentCity">UILabel</string>
+						<string key="webView">UIWebView</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="currentCity">
+							<string key="name">currentCity</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="webView">
+							<string key="name">webView</string>
+							<string key="candidateClassName">UIWebView</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/HistoryViewController.h</string>
+					</object>
+				</object>
+			</array>
+		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
