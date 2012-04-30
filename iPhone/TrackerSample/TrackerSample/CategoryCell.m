@@ -30,6 +30,10 @@
     label.text = _text;
 }
 
+- (void)setSwitchTag:(int)tag {
+    statusSwitch.tag = tag;
+}
+
 - (void)setSubscribedSwitch:(NSString *)_state {
     statusSwitch.on = [_state boolValue];
 }

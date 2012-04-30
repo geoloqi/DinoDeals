@@ -24,6 +24,8 @@
 - (IBAction)fbLogoutWasTapped:(UIButton *)sender;
 - (int)segmentIndexForTrackingProfile:(LQTrackerProfile)profile;
 
+- (IBAction)categorySwitchWasTapped:(UISwitch *)sender;
+
 - (NSMutableDictionary *)getCategoryAtIndexPath:(NSIndexPath *)indexPath;
 
 @end

@@ -15,5 +15,6 @@
 
 - (void)setLabelText:(NSString *)_text;
 - (void)setSubscribedSwitch:(NSString *)_state;
+- (void)setSwitchTag:(int)tag;
 
 @end

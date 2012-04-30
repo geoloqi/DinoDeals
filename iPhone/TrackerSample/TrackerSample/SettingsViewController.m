@@ -39,13 +39,13 @@
     
     // self.currentTrackingProfile.selectedSegmentIndex = [self segmentIndexForTrackingProfile:[[LQTracker sharedTracker] profile]];
 
-    // NSURL *url = [NSURL URLWithString:@"https://deals.geoloqi.com/api/categories"];
-    NSURL *url = [NSURL URLWithString:@"http://geoloqi.cc/categories.php"];
+    NSURL *url = [NSURL URLWithString:@"https://deals.geoloqi.com/api/categories"];
+//    NSURL *url = [NSURL URLWithString:@"http://geoloqi.cc/categories.php"];
 	NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url 
                                                                 cachePolicy:NSURLRequestReloadIgnoringCacheData 
                                                             timeoutInterval:10.0];
     
-	[request setHTTPMethod:@"POST"];
+	[request setHTTPMethod:@"GET"];
     [request setValue:[NSString stringWithFormat:@"Bearer %@", [LQSession savedSession].accessToken] forHTTPHeaderField:@"Authorization"];
     [[LQSession savedSession] runAPIRequest:request completion:^(NSHTTPURLResponse *response, NSDictionary *responseDictionary, NSError *error) {
         // On response, store the Geoloqi token and start tracking in passive mode
@@ -111,10 +111,14 @@
 
 #pragma mark - UITableViewDelegate
 
-- (NSMutableDictionary *)getCategoryAtIndexPath:(NSIndexPath *)indexPath {
+- (NSMutableDictionary *)getCategoryAtIndex:(int)index {
     NSMutableDictionary *layer = nil;
-    layer = [[categories objectAtIndex:indexPath.row] mutableCopy];
+    layer = [[categories objectAtIndex:index] mutableCopy];
     return layer;
+}
+
+- (NSMutableDictionary *)getCategoryAtIndexPath:(NSIndexPath *)indexPath {
+    return [self getCategoryAtIndex:indexPath.row];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -144,8 +148,29 @@
 	
 	[cell setLabelText:[category objectForKey:@"name"]];
     [cell setSubscribedSwitch:[category objectForKey:@"subscribed"]];
+    [cell setSwitchTag:indexPath.row];
     
 	return cell;
 }
+
+#pragma mark -
+
+- (IBAction)categorySwitchWasTapped:(UISwitch *)sender {
+	NSDictionary *category = [self getCategoryAtIndex:sender.tag];
+    NSString *path;
+    if(sender.on) {
+        path = [NSString stringWithFormat:@"/layer/subscribe/%@", [category objectForKey:@"id"]];
+    } else {
+        path = [NSString stringWithFormat:@"/layer/unsubscribe/%@", [category objectForKey:@"id"]];
+    }
+    
+    NSMutableURLRequest *request = [[LQSession savedSession] requestWithMethod:@"POST" path:path payload:nil];
+    [[LQSession savedSession] runAPIRequest:request
+                                 completion:^(NSHTTPURLResponse *response, NSDictionary *responseDictionary, NSError *error) {
+//                                     NSLog(@"Response: %@", response);
+                                 }];
+//    NSLog(@"%@", category);
+}
+
 
 @end
