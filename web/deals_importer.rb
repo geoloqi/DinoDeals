@@ -35,16 +35,30 @@ geoloqi.get('layer/list')[:layers].each do |layer|
                           :order => 'distance',
                           :per_page => 250)[:offers]
     offers.each do |offer|
-      name = offer[:short_title].length == 0 ? offer[:title] : offer[:short_title]
-      geoloqi.post 'trigger/create', :key => offer[:id],
-                                     :text => name,
-                                     :url => offer[:url],
-                                     :latitude => offer[:locations][0][:latitude],
-                                     :longitude => offer[:locations][0][:longitude],
-                                     :radius => DEAL_PLACE_RADIUS,
-                                     :place_key => offer[:id],
-                                     :place_layer_id => layer[:layer_id],
-                                     :place_name => offer[:locations][0][:name]
+      offer = offer[:offer]
+      begin
+        text = (!offer[:short_title].nil? && offer[:short_title].length > 0) ? offer[:short_title] : offer[:title]
+        trigger_data = { :key => offer[:id],
+                         :type => 'message',
+                         :text => text,
+                         :url => offer[:url],
+                         :latitude => offer[:locations][0][:latitude],
+                         :longitude => offer[:locations][0][:longitude],
+                         :radius => DEAL_PLACE_RADIUS,
+                         :place_key => offer[:id],
+                         :place_layer_id => layer[:layer_id],
+                         :place_name => offer[:locations][0][:name] }
+        puts "\n\ncreating - #{text}"
+        puts geoloqi.post 'trigger/create', trigger_data
+      rescue Geoloqi::ApiError => gae
+        # TODO error out nicer
+        STDERR.puts "=========="
+        STDERR.puts gae.message
+        STDERR.puts trigger_data.inspect
+        STDERR.puts offer
+        STDERR.puts "=========="
+        # binding.pry
+      end
     end
   end
   
