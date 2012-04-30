@@ -15,7 +15,7 @@
 
 @implementation HistoryViewController
 
-@synthesize webView;
+@synthesize webView, currentCity;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -39,6 +39,8 @@
     [request setValue:[NSString stringWithFormat:@"Bearer %@", [LQSession savedSession].accessToken] forHTTPHeaderField:@"Authorization"];
     [self.webView loadRequest:request];
     
+    [self reloadCurrentLocation];
+    
     [[LQTracker sharedTracker] setProfile:LQTrackerProfilePassive];
 }
 
@@ -58,6 +60,14 @@
 
 - (IBAction)reloadWasTapped:(UIButton *)sender {
     [self.webView reload];
+    [self reloadCurrentLocation];
+}
+
+- (void)reloadCurrentLocation {
+    NSURLRequest *request = [[LQSession savedSession] requestWithMethod:@"GET" path:@"/location/context" payload:nil];
+    [[LQSession savedSession] runAPIRequest:request completion:^(NSHTTPURLResponse *response, NSDictionary *responseDictionary, NSError *error) {
+        self.currentCity.text = [responseDictionary objectForKey:@"best_name"];
+    }];
 }
 
 @end

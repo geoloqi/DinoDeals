@@ -113,7 +113,7 @@
 							</object>
 						</array>
 					</object>
-					<object class="IBUILabel" id="724820828">
+					<object class="IBUILabel" id="816645190">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{9, 57}, {302, 46}}</string>
@@ -125,7 +125,7 @@
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<string key="IBUIText"/>
-						<object class="NSColor" key="IBUITextColor" id="964316803">
+						<object class="NSColor" key="IBUITextColor" id="132354908">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MCAwIDAAA</bytes>
 						</object>
@@ -143,7 +143,7 @@
 							<int key="NSfFlags">16</int>
 						</object>
 					</object>
-					<object class="IBUILabel" id="590331862">
+					<object class="IBUILabel" id="976563204">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{0, 44}, {320, 21}}</string>
@@ -155,7 +155,7 @@
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<string key="IBUIText">Current City</string>
-						<reference key="IBUITextColor" ref="964316803"/>
+						<reference key="IBUITextColor" ref="132354908"/>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">0</int>
 						<float key="IBUIMinimumFontSize">10</float>
@@ -257,6 +257,14 @@ AAgACAAIAAEAAQABAAE</bytes>
 					<int key="connectionID">9</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">currentCity</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="816645190"/>
+					</object>
+					<int key="connectionID">13</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">reloadWasTapped:</string>
 						<reference key="source" ref="199735022"/>
@@ -280,8 +288,8 @@ AAgACAAIAAEAAQABAAE</bytes>
 						<array class="NSMutableArray" key="children">
 							<reference ref="902182054"/>
 							<reference ref="293411845"/>
-							<reference ref="724820828"/>
-							<reference ref="590331862"/>
+							<reference ref="816645190"/>
+							<reference ref="976563204"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -332,12 +340,12 @@ AAgACAAIAAEAAQABAAE</bytes>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">11</int>
-						<reference key="object" ref="724820828"/>
+						<reference key="object" ref="816645190"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">12</int>
-						<reference key="object" ref="590331862"/>
+						<reference key="object" ref="976563204"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 				</array>
@@ -360,7 +368,7 @@ AAgACAAIAAEAAQABAAE</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">12</int>
+			<int key="maxID">13</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>

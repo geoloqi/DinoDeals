@@ -10,9 +10,10 @@
 
 @interface HistoryViewController : UIViewController
 
+@property IBOutlet UILabel *currentCity;
 @property IBOutlet UIWebView *webView;
 
 - (IBAction)reloadWasTapped:(UIButton *)sender;
-
+- (void)reloadCurrentLocation;
 
 @end
