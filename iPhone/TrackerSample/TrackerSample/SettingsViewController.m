@@ -23,6 +23,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    loadingView.hidden = NO;
 	// Do any additional setup after loading the view, typically from a nib.
 
     NSURL *url = [NSURL URLWithString:@"https://deals.geoloqi.com/api/categories"];
@@ -38,6 +39,7 @@
         if([responseDictionary objectForKey:@"categories"]) {
             categories = [responseDictionary objectForKey:@"categories"];
             [tableView reloadData];
+            loadingView.hidden = YES;
         } else {
             // Error logging in
         }

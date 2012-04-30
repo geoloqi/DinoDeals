@@ -11,6 +11,7 @@
 @interface SettingsViewController : UIViewController <UITableViewDelegate, UITableViewDelegate> {
 	IBOutlet UITableView *tableView;
 	IBOutlet CategoryCell *categoryCell;
+    IBOutlet UIView *loadingView;
 	NSArray *categories;
 }
 
