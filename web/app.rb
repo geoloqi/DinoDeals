@@ -10,6 +10,7 @@ get '/' do
 end
 
 get '/api/categories' do
+  puts "Categories"
   layers = Geoloqi::Session.new(:access_token => CONFIG['geoloqi']['app_access_token']).get('layer/list')[:layers]
   subscribed = @geoloqi.get('layer/subscriptions')
   resp = { :categories => [] }
@@ -21,5 +22,34 @@ get '/api/categories' do
     })
   end
   content_type :json
+  puts "Response"
   resp.to_json
+end
+
+get '/api/nearby' do
+  subscribed = @geoloqi.get('layer/subscriptions')
+  
+  latitude = params[:latitude]
+  longitude = params[:longitudes]
+  
+  resp = { :deals => [] }
+  
+  batch = @geoloqi.batch do
+    subscribed.each do |layer|
+      if layer.type === "normal"
+        get("place/nearby", {
+          latitude: latitude,
+          longitude: longitude,
+          layer_id: layer[:layer_id],
+          distance: 1500,
+          limit: 100
+        })
+      end
+    end
+  end
+  
+  batch.each do |request|
+    request[:body][:places]
+  end
+
 end

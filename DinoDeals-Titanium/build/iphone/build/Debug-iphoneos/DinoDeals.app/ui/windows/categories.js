@@ -1,1 +1,0 @@
-/Users/Patrick/code/DinoDeals-Titanium/Resources/ui/windows/categories.js

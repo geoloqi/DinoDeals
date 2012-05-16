@@ -1,1 +1,0 @@
-/Users/Patrick/code/DinoDeals-Titanium/Resources/geoloqi-module-config.js
