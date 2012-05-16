@@ -491,7 +491,17 @@ section.about article {
   margin: 10px;
   border: 1px solid #a6a6a6; }
   section.about article h3 {
-    margin-top: 0; }
+    margin-top: 0;
+    margin-bottom: .5em; }
+  section.about article p {
+    margin: 0; }
+  section.about article a.button {
+    position: static;
+    display: block;
+    float: left;
+    margin-top: 1em; }
+section.about div.spacer {
+  padding-top: 10px; }
 
 a.button {
   -webkit-border-radius: 4px;

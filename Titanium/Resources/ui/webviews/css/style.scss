@@ -72,7 +72,20 @@ section.about {
 		border: 1px solid $lightGray;
 		h3 {
 			margin-top:0;
+			margin-bottom:.5em;
 		}
+		p {
+			margin:0;
+		}
+		a.button {
+			position: static;
+			display:block;
+			float:left;
+			margin-top:1em;
+		}
+	}
+	div.spacer{
+		padding-top:10px;
 	}
 }
 
