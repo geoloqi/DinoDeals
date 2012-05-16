@@ -15,11 +15,10 @@
 	<section id="scroll" class="deals">
 		<div>
 			<% _.each(messages, function(message){ %>
-				<% console.log(message); %>
 				<article>
-					<a onclick="Ti.App.fireEvent('openURL', { url: '<%= message.object.sourceURL %>'});" class="button">Get Deal</a>
+					<a onclick="Titanium.App.fireEvent('openURL', { url: '<%= message.object.sourceURL %>'});" class="button">Get Deal</a>
 					<p><%= message.object.summary %></p>
-					<small>Recived: <time datetime=<%= message.localtime %>><%= message.displayDate %></time></small>
+					<small>Received: <time datetime=<%= message.localtime %>><%= message.displayDate %></time></small>
 				</article>
 
 			<% }); %>

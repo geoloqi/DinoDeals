@@ -37,22 +37,24 @@ $(function(){
         this.reset(this.localStorage.findAll());
       },
       fetch: function(access_token){
-        $.getJSON("http://api.geoloqi.com/1/timeline/messages?callback=?", {
-          access_token: access_token,
-          limit: 100
-        }, _.bind(function(data, textStatus, jqXHR){
+        if(access_token){
+          $.getJSON("http://api.geoloqi.com/1/timeline/messages?callback=?", {
+            access_token: access_token,
+            limit: 100
+          }, _.bind(function(data, textStatus, jqXHR){
 
-          this.destroyAll();
+            this.destroyAll();
 
-          _.each(data.items, _.bind(function(message){
-            message.geoloqi_id = message.id;
-            delete message.id;
-            this.create(message);
+            _.each(data.items, _.bind(function(message){
+              message.geoloqi_id = message.id;
+              delete message.id;
+              this.create(message);
+            }, this));
+            
+            this.trigger("reset");
+
           }, this));
-          
-          this.trigger("reset");
-
-        }, this));
+        }
       },
       destroyAll: function(){
         _.each(this.localStorage.findAll(), _.bind(function(message){
@@ -62,22 +64,23 @@ $(function(){
     });
     triggers = new Collection();
 
-    
-
     Routes = Backbone.Router.extend({
       routes:{
+        "": "fetch",
         ":access_token": "fetch"
       },
       initialize: function(options){
+        document.ontouchmove = function(event){ event.preventDefault(); };
         this.collection = options.collection;
         Backbone.history.start();
       },
       fetch: function(access_token){
-        access_token = access_token;
+        access_token = access_token || null;
         this.collection.fetch(access_token);
       }
     });
     router = new Routes({collection:triggers});
+    
     
     return {
       triggers : triggers,
@@ -86,4 +89,5 @@ $(function(){
     };
 
   })(_, Backbone, jQuery);
+  
 });

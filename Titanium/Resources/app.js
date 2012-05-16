@@ -87,7 +87,7 @@ var DinoDeals = {
   // activity view tab
   DinoDeals.Tabs.activity = Ti.UI.createTab({
     title: 'Activity',
-    icon: '/images/tabs_activity.png',
+    icon: '/images/tabs_categories.png',
     window: DinoDeals.Windows.activity
   });
   DinoDeals.tabGroup.addTab(DinoDeals.Tabs.activity);
@@ -95,7 +95,7 @@ var DinoDeals = {
   // category view tab
   DinoDeals.Tabs.categories = Ti.UI.createTab({
     title: 'Categories',
-    icon: '/images/tabs_categories.png',
+    icon: '/images/tabs_activity.png',
     window: DinoDeals.Windows.categories,
   });
   DinoDeals.tabGroup.addTab(DinoDeals.Tabs.categories);

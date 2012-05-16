@@ -1,0 +1,34 @@
+<html>
+<head>
+  <title>Offline Web App Demo</title>  
+  <link rel="stylesheet" href="css/style.css">
+  <meta name="viewport" content="width=device-width">
+</head>
+<body>
+	<section id="scroll" class="about">
+		<div>
+			<article>
+				<h3>About Geoloqi</h3>
+				<p>Geoloqi is a...</p>
+			</article>
+			<article>
+				<h3>About Titanium</h3>
+				<p>Titanium is a...</p>
+			</article>
+			<article>
+				<h3>About Sqoout</h3>
+				<p>Sqoot is a...</p>
+			</article>
+		</div>
+	</section>
+
+<script src="js/vendor/iscroll.js"></script>
+<script type="text/javascript">
+	function loaded() {
+		document.addEventListener('touchmove', function(e){ e.preventDefault(); });
+		myScroll = new iScroll('scroll');
+	}
+	document.addEventListener('DOMContentLoaded', loaded);
+</script>
+</body>
+</html>

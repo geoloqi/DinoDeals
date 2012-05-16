@@ -7,7 +7,6 @@ exports = (function(Config){
   rows = [],
   tableView = null,
   categoriesWindow = Ti.UI.currentWindow,
-  loadingButton = Ti.UI.createButton({ systemButton: Ti.UI.iPhone.SystemButton.ACTIVITY }),
   refreshButton = Ti.UI.createButton({ systemButton: Ti.UI.iPhone.SystemButton.REFRESH }),
   activityIndicator = Ti.UI.createActivityIndicator({ message: 'Loading...', style: Titanium.UI.iPhone.ActivityIndicatorStyle.DARK }),
   xhr = Titanium.Network.createHTTPClient(),
@@ -25,10 +24,7 @@ exports = (function(Config){
 
   // Configure xhr object
   xhr.onload = function() {
-    Ti.API.info("Callback");
-    Ti.API.info(JSON.parse(this.responseText));
     updateRows(JSON.parse(this.responseText).categories);
-    spinnerOff();
     activityIndicator.hide();
   };
 
@@ -38,21 +34,16 @@ exports = (function(Config){
 
   function refreshCategories(){
     Ti.API.info("Refreshing Categories");
-    spinnerOn();
     xhr.open("GET", Config.baseURL+"/api/categories");
     xhr.setRequestHeader("Authorization", "Bearer " + Geoloqi.session.getAccessToken());
     xhr.send();
   }
 
   function updateRows(categories){
-    Ti.API.info("Updating Rows");
-    Ti.API.info(categories);
     rows = [header];
     if(categories){
       for(var i=0; i < categories.length; i++) {
         category = categories[i];
-        Ti.API.info(category);
-        Ti.API.info("Creating Row for Layer " + category.id);
         
         var row = Ti.UI.createTableViewRow({
           height:"50dp",
@@ -73,8 +64,6 @@ exports = (function(Config){
         toggle.addEventListener("change", function(e){
           layerid = e.source.row.layerid;
           subscribed = e.value;
-
-          Ti.API.info("Layer" + layerid +" State " + subscribed);
           
           if(subscribed){
             subscribe(layerid);
@@ -104,10 +93,8 @@ exports = (function(Config){
 
   function subscribe(layerid){
     Ti.API.info("Subscribing to "+ layerid);
-    spinnerOn();
     Geoloqi.session.postRequest("layer/subscribe/"+layerid, {}, {
       onSuccess: function(data){
-        spinnerOff();
         Ti.API.info(data);
       },
       onFailure: function(error){
@@ -118,28 +105,14 @@ exports = (function(Config){
 
   function unsubscribe(layerid){
     Ti.API.info("Unsubscribing from "+ layerid);
-    spinnerOn();
     Geoloqi.session.postRequest("layer/subscribe/"+layerid, {}, {
       onSuccess: function(data){
-        spinnerOff();
         Ti.API.info(data);
       },
       onFailure: function(error){
         Ti.API.error(error);
       }
     });
-  }
-
-  function spinnerOn(){
-    if(Ti.Platform.osname === "iphone"){
-      categoriesWindow.setLeftNavButton(loadingButton);
-    }
-  }
-
-  function spinnerOff(){
-    if(Ti.Platform.osname === "iphone"){
-      categoriesWindow.setLeftNavButton(null);
-    }
   }
 
   categoriesWindow.add(activityIndicator);
