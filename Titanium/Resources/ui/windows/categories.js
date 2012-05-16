@@ -11,15 +11,17 @@ exports = (function(Config){
   refreshButton = Ti.UI.createButton({ systemButton: Ti.UI.iPhone.SystemButton.REFRESH }),
   activityIndicator = Ti.UI.createActivityIndicator({ message: 'Loading...', style: Titanium.UI.iPhone.ActivityIndicatorStyle.DARK }),
   xhr = Titanium.Network.createHTTPClient(),
-  Geoloqi = categoriesWindow.Geoloqi; //Pass Geoloqi as a shared reference, ugh...
+  Geoloqi = categoriesWindow.Geoloqi;
   
   // Set refresh button in menu bar
-  categoriesWindow.setRightNavButton(refreshButton);
-
-  // Listen for click on refresh
-  refreshButton.addEventListener("click", function(e){
-    refreshCategories();
-  });
+  if(Ti.Platform.osname === "iphone"){
+    categoriesWindow.setRightNavButton(refreshButton);
+  
+    // Listen for click on refresh
+    refreshButton.addEventListener("click", function(e){
+      refreshCategories();
+    });
+  }
 
   // Configure xhr object
   xhr.onload = function() {
@@ -32,7 +34,7 @@ exports = (function(Config){
 
   xhr.error = function(error){
     Ti.API.error(error);
-  }
+  };
 
   function refreshCategories(){
     Ti.API.info("Refreshing Categories");
@@ -40,7 +42,7 @@ exports = (function(Config){
     xhr.open("GET", Config.baseURL+"/api/categories");
     xhr.setRequestHeader("Authorization", "Bearer " + Geoloqi.session.getAccessToken());
     xhr.send();
-  };
+  }
 
   function updateRows(categories){
     Ti.API.info("Updating Rows");
@@ -80,7 +82,7 @@ exports = (function(Config){
             unsubscribe(layerid);
           }
         });
-        
+
         row.add(label);
         row.add(toggle);
         rows.push(row);
@@ -129,11 +131,15 @@ exports = (function(Config){
   }
 
   function spinnerOn(){
-    categoriesWindow.setLeftNavButton(loadingButton);
+    if(Ti.Platform.osname === "iphone"){
+      categoriesWindow.setLeftNavButton(loadingButton);
+    }
   }
 
   function spinnerOff(){
-    categoriesWindow.setLeftNavButton(null);
+    if(Ti.Platform.osname === "iphone"){
+      categoriesWindow.setLeftNavButton(null);
+    }
   }
 
   categoriesWindow.add(activityIndicator);
