@@ -1,0 +1,47 @@
+<html>
+<head>
+  <title>Offline Web App Demo</title>  
+  <link rel="stylesheet" href="css/style.css">
+  <meta name="viewport" content="width=device-width">
+</head>
+<body>
+
+<div id="main">
+	
+</div>
+
+<script id="messageListTemplate" type="text/template">
+<% if(messages.length >= 1){ %> 
+	<section id="scroll" class="deals">
+		<div>
+			<% _.each(messages, function(message){ %>
+				<% console.log(message); %>
+				<article>
+					<a onclick="Ti.App.fireEvent('openURL', { url: '<%= message.object.sourceURL %>'});" class="button">Get Deal</a>
+					<p><%= message.object.summary %></p>
+					<small>Recived: <time datetime=<%= message.localtime %>><%= message.displayDate %></time></small>
+				</article>
+
+			<% }); %>
+		<div>
+	</section>
+<% } else { %>
+	<section id="scroll" class="no-deals">
+		<div>
+			<p>You havn&rsquo;t gone near any deals yet. When you get near a deal we&rsquo;ll send you a notification.</p> 
+			<p>Until then try subscribing to more categories.</p>
+			<a onclick="Ti.App.fireEvent('openCategories');" class="button center">Update Interests</a>
+		</div>
+	</section>
+<% } %>
+</script>
+
+<script src="js/vendor/underscore-min.js"></script>
+<script src="js/vendor/jquery-1.7.2.min.js"></script>
+<script src="js/vendor/backbone-min.js"></script>
+<script src="js/vendor/backbone.localStorage-min.js"></script>
+<script src="js/vendor/iscroll.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+@import "preboot.scss";
+@import "reset.scss";
+
+$blue: #27ade7;
+$darkBlue: darken($blue, 15);
+
+html, body, section{
+	width:100%;
+	height:100%;
+}
+
+section {
+	@include box-sizing("border-box");
+	overflow: hidden;
+	article {
+		@include clearfix();
+		@include background-clip("padding-box");
+		@include box-shadow(0 1px 2px rgba(0,0,0,0.1));
+		color: $darkerGray;
+		background: $white;
+		border-bottom: 1px solid $gray;
+		padding: 15px 8px;
+		display: block;
+		text-decoration:none;
+		position: relative;
+		&:last-of-type {
+			border-bottom:none;
+			@include box-shadow(none);
+		}
+		img {
+			float: left;
+		}
+		p, small {
+			display: block;
+			//margin: 0 96px 0 38px;
+			margin: 0 96px 0 0;
+		}
+		p {
+			font-size:.85em;
+		}
+		small {
+			font-size:.75em;
+			color:$lightGray;
+		}
+	}
+}
+
+section.no-deals {
+	text-align:center;
+	p {
+		margin:1.5em;
+		&:last-of-type {
+			margin-bottom:2em;
+		}
+	}
+	a.button {
+		font-size:1.25em;
+		right:auto;
+		display:inline;
+		position: static;
+	}
+}
+
+a.button {
+	@include border-radius(4px);
+	position: absolute;
+	display:block;
+	background:$blue;
+	color:$white;
+	padding:0.5em 1em;
+	text-decoration:none;
+	font-size:.85em;
+	border:1px solid $darkBlue;
+	top:45%;
+	margin-top:-1em;
+	right:10px;
+	font-weight:700;
+}
