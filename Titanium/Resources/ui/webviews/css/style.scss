@@ -18,11 +18,11 @@ section {
 	left:0;
 	bottom:0;
 	right:0;
+	background: $white;
 	article {
 		@include clearfix();
 		@include background-clip("padding-box");
 		color: $darkerGray;
-		background: $white;
 		border-bottom: 1px solid $lightGray;
 		padding: 15px 8px;
 		display: block;
@@ -66,41 +66,43 @@ section.no-deals {
 }
 
 section.about {
-	article { 
+	background: transparent;
+	article {
 		@include border-radius(4px);
+		background: $white;
 		margin: 10px;
 		border: 1px solid $lightGray;
 		h3 {
-			margin-top:0;
-			margin-bottom:.5em;
+			margin-top: 0;
+			margin-bottom: .5em;
 		}
 		p {
-			margin:0;
+			margin: 0;
 		}
 		a.button {
 			position: static;
-			display:block;
-			float:left;
-			margin-top:1em;
+			display: block;
+			float: left;
+			margin-top: 1em;
 		}
 	}
 	div.spacer{
-		padding-top:10px;
+		padding-top: 10px;
 	}
 }
 
 a.button {
 	@include border-radius(4px);
 	position: absolute;
-	display:block;
-	background:$blue;
-	color:$white;
-	padding:0.5em 1em;
-	text-decoration:none;
-	font-size:.85em;
-	border:1px solid $darkBlue;
-	top:45%;
-	margin-top:-1em;
-	right:10px;
-	font-weight:700;
+	display: block;
+	background: $blue;
+	color: $white;
+	padding: 0.5em 1em;
+	text-decoration: none;
+	font-size: .85em;
+	border: 1px solid $darkBlue;
+	top: 45%;
+	margin-top: -1em;
+	right: 10px;
+	font-weight: 700;
 }

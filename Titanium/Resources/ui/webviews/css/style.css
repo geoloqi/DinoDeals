@@ -441,14 +441,14 @@ section {
   top: 0;
   left: 0;
   bottom: 0;
-  right: 0; }
+  right: 0;
+  background: white; }
   section article {
     zoom: 1;
     -webkit-background-clip: "padding-box";
     -moz-background-clip: "padding-box";
     background-clip: "padding-box";
     color: #333333;
-    background: white;
     border-bottom: 1px solid #a6a6a6;
     padding: 15px 8px;
     display: block;
@@ -484,24 +484,27 @@ section.no-deals {
     display: inline;
     position: static; }
 
-section.about article {
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
-  margin: 10px;
-  border: 1px solid #a6a6a6; }
-  section.about article h3 {
-    margin-top: 0;
-    margin-bottom: .5em; }
-  section.about article p {
-    margin: 0; }
-  section.about article a.button {
-    position: static;
-    display: block;
-    float: left;
-    margin-top: 1em; }
-section.about div.spacer {
-  padding-top: 10px; }
+section.about {
+  background: transparent; }
+  section.about article {
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    background: white;
+    margin: 10px;
+    border: 1px solid #a6a6a6; }
+    section.about article h3 {
+      margin-top: 0;
+      margin-bottom: .5em; }
+    section.about article p {
+      margin: 0; }
+    section.about article a.button {
+      position: static;
+      display: block;
+      float: left;
+      margin-top: 1em; }
+  section.about div.spacer {
+    padding-top: 10px; }
 
 a.button {
   -webkit-border-radius: 4px;
