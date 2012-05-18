@@ -4,10 +4,10 @@
 #
 version: 1.0
 apiversion: 2
-description: My module
-author: Your Name
-license: Specify your license
-copyright: Copyright (c) 2012 by Your Company
+description: Geoloqi module for Titanium. Provides the ability to quickly create geo-triggered messages.
+author: Geoloqi, Inc.
+license: Appcelerator Commercial License
+copyright: Copyright (c) 2012 by Geoloqi, Inc.
 
 
 # these should not be edited

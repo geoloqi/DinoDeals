@@ -10,9 +10,9 @@
     <sdk-version>2.0.1.GA2</sdk-version>
     <id>com.geoloqi.deals</id>
     <name>DinoDeals</name>
-    <version>1.0</version>
+    <version>1.0.2</version>
     <publisher>Geoloqi, Inc.</publisher>
-    <url>http://geoloqi.com</url>
+    <url>https://geoloqi.com</url>
     <description>not specified</description>
     <copyright>2012 by Geoloqi, Inc.</copyright>
     <icon>appicon.png</icon>
