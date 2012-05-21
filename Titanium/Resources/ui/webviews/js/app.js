@@ -12,6 +12,7 @@ $(function(){
       defaults: {}
     });
     
+    // A simple view object to render messages. Uses iScroll for native scrolling.
     View = Backbone.View.extend({
       el: "#main",
       template: _.template($("#messageListTemplate").text()),
@@ -25,7 +26,6 @@ $(function(){
     });
     list = new View();
     
-
     Collection = Backbone.Collection.extend({
       model: Model,
       view: list,
