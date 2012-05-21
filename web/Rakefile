@@ -1,0 +1,109 @@
+require File.join(File.dirname(__FILE__), 'env')
+
+namespace :bootstrap do
+	desc "Create the initial categories to sort deals into"
+	task :categories do
+
+		# Create a new geoloqi session as the application
+		geoloqi = Geoloqi::Session.new :access_token => CONFIG['geoloqi']['app_access_token']
+
+		# For each category in our env.rb create a geoloqi layer to store deals for that category
+		CATEGORIES.each do |k,v|
+		  puts "creating layer category for #{k}..."
+		  geoloqi.post 'layer/create', {:name => k, :key => v, :public => 1}
+		end
+
+	end
+end
+
+namespace :import do
+	desc "Import deals from Sqoot"
+	task :deals do
+
+		# Create a new geoloqi session as the application
+		geoloqi = Geoloqi::Session.new :access_token => CONFIG['geoloqi']['app_access_token']
+		
+		# Create a new Sqoot client
+		sqoot = Sqoot::Client.new
+
+		# Get all layers created by the application
+		geoloqi.get('layer/list')[:layers].each do |layer|
+
+			# Store location to search for deals nearby
+		  layer_points = []
+
+		  # Get information about the distribution of users subscribed to each layer
+		  user_clusters_resp = geoloqi.get("layer/user_clusters/#{layer[:layer_id]}")
+		  
+		  # For each cluster of users add a point to search for deals nearby
+		  user_clusters_resp[:clusters].each do |c|
+		    layer_points.push({
+		      :latitude => c[:bounds][:center][:latitude],   # 'latitude' & 'longitude'
+		      :longitude => c[:bounds][:center][:longitude], # in the bounds object...
+		      :radius => (c[:bounds][:radius] + (DEAL_SEARCH_RADIUS/2))
+		    })
+		  end
+
+		  # For each single users add a point to search for deals nearby
+		  user_clusters_resp[:singles].each do |s|
+		    layer_points.push({
+		      :latitude => s[:lat],  # ...but it's 'lat' & 'lng'in everything else 
+		      :longitude => s[:lng],
+		      :radius => DEAL_SEARCH_RADIUS
+		    })
+		  end
+
+		  # Store deals in an array
+		  sqoot_deals = []
+
+		  # For each layer_points search for nearby deals
+		  layer_points.each do |lp|
+		    radius_in_miles = lp[:radius] / 1609.3
+
+		    # Get nearby deals from Sqoot
+		    offers = sqoot.offers(:location => "#{lp[:latitude]},#{lp[:longitude]}",
+		                          :radius => radius_in_miles,
+		                          :national => false,
+		                          :categories => CATEGORIES[layer[:name]],
+		                          :order => 'distance',
+		                          :per_page => 250)[:offers]
+		    
+
+		    offers.each do |offer|
+		    
+		      offer = offer[:offer]
+		    	
+		    	# For each deal create a trigger in Geoloqi on the appropriate layer.
+		    	# You can deduplicate triggers by providing a `key` in the parmeters.
+		      begin
+		        text = (!offer[:short_title].nil? && offer[:short_title].length > 0) ? offer[:short_title] : offer[:title]
+		        trigger_data = { :key => offer[:id],
+		                         :type => 'message',
+		                         :text => text,
+		                         :url => offer[:url],
+		                         :latitude => offer[:locations][0][:latitude],
+		                         :longitude => offer[:locations][0][:longitude],
+		                         :radius => DEAL_PLACE_RADIUS,
+		                         :place_key => offer[:id],
+		                         :place_layer_id => layer[:layer_id],
+		                         :place_name => offer[:locations][0][:name] }
+		        puts "\n\ncreating - #{text}"
+		        puts geoloqi.post 'trigger/create', trigger_data
+		      rescue Geoloqi::ApiError => gae
+		        # TODO error out nicer
+		        STDERR.puts "=========="
+		        STDERR.puts gae.message
+		        STDERR.puts trigger_data.inspect
+		        STDERR.puts offer
+		        STDERR.puts "=========="
+		        # binding.pry
+		      end
+		    end
+		  end
+		  
+		end
+	end
+end
+
+desc "Create an alias for rake cron to import deals on heroku"
+task "cron" => "import:deals"
