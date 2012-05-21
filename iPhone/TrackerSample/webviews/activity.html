@@ -1,0 +1,46 @@
+<html>
+<head>
+  <title>Dino Deals</title>  
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width">
+</head>
+<body>
+
+<div id="main">
+	
+</div>
+
+<script id="messageListTemplate" type="text/template">
+<% if(messages.length){ %> 
+	<section id="scroll" class="deals">
+		<div>
+			<% _.each(messages, function(message){ %>
+				<article>
+					<a href="<%= message.object.sourceURL %>" class="button">Get Deal</a>
+					<p><%= message.object.summary %></p>
+					<small>Received: <time datetime=<%= message.localtime %>><%= message.displayDate %></time></small>
+				</article>
+
+			<% }); %>
+		<div>
+	</section>
+<% } else { %>
+	<section id="scroll" class="no-deals">
+		<div>
+			<p>You haven&rsquo;t picked up any deals yet. When you get near a deal we&rsquo;ll send you a notification.</p> 
+			<p>Until then try subscribing to more categories.</p>
+			<a href="dinodeals://categories" class="button center">Update Interests</a>
+		</div>
+	</section>
+<% } %>
+</script>
+
+<script src="underscore-min.js"></script>
+<script src="jquery-1.7.2.min.js"></script>
+<script src="backbone-min.js"></script>
+<script src="backbone.localStorage-min.js"></script>
+<script src="iscroll.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>

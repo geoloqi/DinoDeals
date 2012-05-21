@@ -1,0 +1,456 @@
+// Baseline grid
+$basesize:            16px;
+$baseline:            24px; 
+
+// Grid
+$gridColumns:         24;
+$gridColumnWidth:     30px;
+$gridGutterWidth:     10px;
+
+ 
+// Font Stacks 
+//
+// From: http://cssfontstack.com/
+
+// Sans Serif
+$Arial:               Arial, "Helvetica Neue", Helvetica, sans-serif;
+$Helvetica-Neue:      "Helvetica Neue", Helvetica, Arial, sans-serif;
+$Lucida-Grande:       "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+$Futura:              Futura, "Trebuchet MS", Arial, sans-serif;
+$Segoe-UI:            "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+
+// Serif
+$Baskerville:         Baskerville, "Baskerville Old Face", "Hoefler Text", Garamond, "Times New Roman", serif;
+$Georgia:             Georgia, Times, “Times New Roman”, serif;
+$Palatino:            Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
+$TimesNewRoman:       TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif;
+
+// Monospaced
+$Courier-New:         "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+$Lucida-Console:      "Lucida Sans Typewriter", "Lucida Console", Monaco, "Bitstream Vera Sans Mono", monospace;
+
+// Typography
+$bodyFont:            sans-serif;
+$headerFont:          sans-serif;
+
+// Links
+$linkColor:           #ff0000;
+$linkHover:           #cc0000;
+
+// Predefined Grays
+$white:               #ffffff;
+$offWhite:            hsl(0, 0, 98); // #fafafa
+$ultraLightGray:      hsl(0, 0, 92); // ebebeb
+$lighterGray:         hsl(0, 0, 80); // cccccc
+$lightGray:           hsl(0, 0, 65); // a6a6a6
+$gray:                hsl(0, 0, 50); // 808080
+$darkGray:            hsl(0, 0, 35); // 595959
+$darkerGray:          hsl(0, 0, 20); // 333333
+$ultraDarkGray:       hsl(0, 0, 12); // 1f1f1f
+$offBlack:            hsl(0, 0, 2);  // 050505
+$black:               #000000;
+
+// Selection Colors
+$selectionColor:      #fff;
+$selectionBackground: #fe57a1;
+
+// Fields
+$fieldWidth : 6;
+$labelWidth : 3;
+
+// Layout
+$wrapperSelector:     "#wrapper";
+$contentSelector:     "#main";
+
+// Header 
+$headerSelector:      "#header";
+$headerHeight:        150px;;
+$fixedHeader:         "true";
+
+// Footer
+$footerHeight:        150px;
+$footerSelector:      "#footer";
+$fixedFooter:         "false";
+
+// Type Options
+$blockquote-font: inherit;
+$code-font: $Lucida-Console;
+$body-color: $darkerGray;
+
+// Table Options
+$table-border: 1px solid $black;
+$column-border: 1px solid $black;
+$thead-border: 1px solid $black;
+$row-border: 1px solid $gray;
+$tfoot-border: 1px solid $black;
+$odd-row-color: #f2f2f2;
+$even-row-color: #ddd;
+$table-border-radius: 4px;
+
+// Available Helpers
+//
+// The following helpers are available both as mixins
+// and as CSS classes
+//
+// left
+// right
+// clearfix
+// cf
+// ir
+// hidden
+// hide
+// visuallyhidden
+// invisible
+// container
+// center-block
+
+// Floats
+.left { 
+  float: left; 
+}
+
+.right {
+  float: right; 
+}
+
+// Clear 
+.clear {
+  clear: both;
+}
+
+// Clearfix for clearing floats like a boss h5bp.com/q
+@mixin clearfix {
+  zoom: 1;
+  &:before, &:after {
+    display: table;
+    content: "";
+  }
+  &:after {
+    clear: both;
+  }
+}
+.clearfix, .cf {
+  @include clearfix;
+}
+
+// Image Replacement
+@mixin ir { 
+  display: block;
+  border: 0;
+  text-indent: -9999em;
+  overflow: hidden;
+  background-color: transparent;
+  background-repeat: no-repeat; 
+  text-align: left; 
+  direction: ltr; 
+  *line-height: 0;
+}
+
+.ir {
+  @include ir;
+}
+
+.ir br { 
+  display: none; 
+}
+
+/* Hide from both screenreaders and browsers: h5bp.com/u */
+@mixin hidden {
+  display: none !important; visibility: hidden;
+}
+
+.hidden, .hide { 
+  @include hidden 
+}
+
+/* Hide only visually, but have it available for screenreaders: h5bp.com/v */
+@mixin visuallyhidden { border: 0; clip: rect(0 0 0 0); height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute; width: 1px; }
+.visuallyhidden { @include visuallyhidden; }
+
+/* Extends the .visuallyhidden class to allow the element to be focusable when navigated to via the keyboard: h5bp.com/p */
+.visuallyhidden.focusable:active, .visuallyhidden.focusable:focus { clip: auto; height: auto; margin: 0; overflow: visible; position: static; width: auto; }
+
+/* Hide visually and from screenreaders, but maintain layout */
+@mixin invisible { visibility: hidden; }
+.invisible { @include invisible; }
+
+// Center-align a block level element
+@mixin center-block {
+  display: block;
+  margin: 0 auto;
+}
+.center-block { 
+  @include center-block; 
+}
+
+/*
+ * Available mixins
+ *
+ * The following helpers are available mixins to
+ * help ease the use of CSS vendor prefixes and
+ * common usage patterns
+ *
+ * cutoff-text($width)
+ * horizontal-gradient ($startColor, $endColor)
+ * vertical-gradient ($startColor, $endColor)
+ * directional-gradient ($startColor, $endColor, $deg)
+ * vertical-three-colors-gradient($startColor, $midColor, $colorStop, $endColor)
+ * opacity($opacity)
+ * gradientBar($primaryColor, $secondaryColor)
+ * size($height, $width)
+ * square($size)
+ * placeholder($color)
+ * border-radius($radius)
+ * mixed-border-radius($tl, $tr, $br, $bl)
+ * box-sizing($size)
+ * transition($transition)
+ * background-clip($clip)
+ * background-origin($origin)
+ * appearance($appearance)
+ * translucent-background($color, $alpha)
+ * translucent-border($color, $alpha)
+ * content-columns($columnCount, $columnGap)
+ * rhythm($newSize, $lines, $adjust){
+ * arrow-up ($size, $color, $background)
+ * arrow-down ($size, $color, $background)
+ * arrow-left ($size, $color, $background)
+ * arrow-right ($size, $color, $background)
+ *
+ */
+
+// Ellipsis Overflows
+@mixin cutoff-text ($width) {
+  width: $width;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space:pre;
+}
+
+// Gradients
+@mixin horizontal-gradient ($startColor: #555, $endColor: #333) {
+  background-color: $endColor;
+  background-repeat: repeat-x;
+  background-image: -khtml-gradient(linear, left top, right top, from($startColor), to($endColor)); // Konqueror
+  background-image: -moz-linear-gradient(left, $startColor, $endColor); // FF 3.6+
+  background-image: -ms-linear-gradient(left, $startColor, $endColor); // IE10
+  background-image: -webkit-gradient(linear, left top, right top, color-stop(0%, $startColor), color-stop(100%, $endColor)); // Safari 4+, Chrome 2+
+  background-image: -webkit-linear-gradient(left, $startColor, $endColor); // Safari 5.1+, Chrome 10+
+  background-image: -o-linear-gradient(left, $startColor, $endColor); // Opera 11.10
+  background-image: linear-gradient(left, $startColor, $endColor); // Le standard
+}
+
+@mixin vertical-gradient ($startColor: #555, $endColor: #333) {
+  background-color: $endColor;
+  background-repeat: repeat-x;
+  background-image: -khtml-gradient(linear, left top, left bottom, from($startColor), to($endColor)); // Konqueror
+  background-image: -moz-linear-gradient(top, $startColor, $endColor); // FF 3.6+
+  background-image: -ms-linear-gradient(top, $startColor, $endColor); // IE10
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, $startColor), color-stop(100%, $endColor)); // Safari 4+, Chrome 2+
+  background-image: -webkit-linear-gradient(top, $startColor, $endColor); // Safari 5.1+, Chrome 10+
+  background-image: -o-linear-gradient(top, $startColor, $endColor); // Opera 11.10
+  background-image: linear-gradient(top, $startColor, $endColor); // The standard
+}
+
+@mixin directional-gradient ($startColor: #555, $endColor: #333, $deg: 45deg) {
+  background-color: $endColor;
+  background-repeat: repeat-x;
+  background-image: -moz-linear-gradient($deg, $startColor, $endColor); // FF 3.6+
+  background-image: -ms-linear-gradient($deg, $startColor, $endColor); // IE10
+  background-image: -webkit-linear-gradient($deg, $startColor, $endColor); // Safari 5.1+, Chrome 10+
+  background-image: -o-linear-gradient($deg, $startColor, $endColor); // Opera 11.10
+  background-image: linear-gradient($deg, $startColor, $endColor); // The standard
+}
+
+@mixin vertical-three-colors-gradient($startColor: #00b3ee, $midColor: #7a43b6, $colorStop: 50%, $endColor: #c3325f) {
+  background-color: $endColor;
+  background-repeat: no-repeat;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from($startColor), color-stop($colorStop, $midColor), to($endColor));
+  background-image: -webkit-linear-gradient($startColor, $midColor $colorStop, $endColor);
+  background-image: -moz-linear-gradient($startColor, $midColor $colorStop, $endColor);
+  background-image: -ms-linear-gradient($startColor, $midColor $colorStop, $endColor);
+  background-image: -o-linear-gradient($startColor, $midColor $colorStop, $endColor);
+  background-image: linear-gradient($startColor, $midColor $colorStop, $endColor);
+}
+
+// Opacity
+@mixin opacity($opacity: 100) {
+  filter: alpha(opacity=$opacity);
+  -khtml-opacity: $opacity / 100;
+  -moz-opacity: $opacity / 100;
+  opacity: $opacity / 100;
+}
+
+@mixin gradientBar($primaryColor, $secondaryColor) {
+  @include vertical-gradient($primaryColor, $secondaryColor);
+  text-shadow: 0 -1px 0 rgba(0,0,0,.25);
+  border-color: $secondaryColor $secondaryColor darken($secondaryColor, 15%);
+  border-color: rgba(0,0,0,.1) rgba(0,0,0,.1) fadein(rgba(0,0,0,.1), 15%);
+}
+
+
+// Sizing Shortcuts
+@mixin size($height: 5px, $width: 5px) {
+  height: $height;
+  width: $width;
+}
+
+@mixin square($size: 5px) {
+  @include size($size, $size);
+}
+
+// Input placeholder text
+@mixin placeholder($color: $lightGray) {
+  &.placeholder {
+    color: $color;
+  }
+  :-moz-placeholder {
+    color: $color;
+  }
+  ::-webkit-input-placeholder {
+    color: $color;
+  }
+}
+
+// Border Radius
+@mixin border-radius($radius: 5px) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
+}
+
+@mixin mixed-border-radius($tl: 5px, $tr: 5px, $br: 5px, $bl: 5px) {
+  -moz-border-radius-topleft: $tl;
+  -moz-border-radius-topright: $tr;
+  -moz-border-radius-bottomright: $br;
+  -moz-border-radius-bottomleft: $bl;
+  -webkit-border-radius: $tl $tr $br $bl;
+  border-radius: $tl $tr $br $bl;
+}
+
+// Box Sizing
+@mixin box-sizing($size) {
+  -webkit-box-sizing:$size;
+  -moz-box-sizing:$size;
+  box-sizing:$size;
+}
+
+// Box Shadows
+@mixin box-shadow($shadow: 0 1px 3px rgba(0,0,0,.25)) {
+  -webkit-box-shadow: $shadow;
+  -moz-box-shadow: $shadow;
+  box-shadow: $shadow;
+}
+
+// Transitions
+@mixin transition($transition) {
+  -webkit-transition: $transition;
+  -moz-transition: $transition;
+  transition: $transition;
+}
+
+// Background clipping
+@mixin background-clip($clip) {
+  -webkit-background-clip: $clip;
+  -moz-background-clip: $clip;
+  background-clip: $clip;
+}
+
+// Background origin
+@mixin background-origin($origin) {
+  -webkit-background-origin: $origin;
+  -moz-background-origin: $origin;
+  background-origin: $origin;
+}
+
+// Appearance
+@mixin appearance($appearance) {
+  -webkit-appearance: $appearance;
+  -moz-appearance: $appearance;
+  appearance: $appearance;
+}
+
+// Add an alphatransparency value to any background or border color (via Elyse Holladay)
+@mixin translucent-background($color: $white, $alpha: 1) {
+  background-color: hsla(hue($color), saturation($color), lightness($color), $alpha);
+}
+
+@mixin translucent-border($color: $white, $alpha: 1) {
+  border-color: hsla(hue($color), saturation($color), lightness($color), $alpha);
+  background-clip: padding-box;
+}
+
+// CSS3 Content Columns
+@mixin content-columns($columnCount, $columnGap: 20px) {
+  -webkit-column-count: $columnCount;
+     -moz-column-count: $columnCount;
+          column-count: $columnCount;
+  -webkit-column-gap: $columnGap;
+     -moz-column-gap: $columnGap;
+          column-gap: $columnGap;
+}
+
+// Establish a Vertical Rhythm
+@mixin rhythm($newSize, $lines: 1, $adjust: 1){
+  font-size: $newSize / $adjust;
+  line-height: #{($lines * $baseline) / (($newSize/1em) * $basesize)}em;
+}
+
+// Add arrows to an element
+@mixin _arrow-base ($size, $color, $background: transparent){
+  position:relative;
+  &:after {
+    @include square(0);
+    content:"&nbsp";
+    text-indent:-9999em;
+    display:block;
+    position:absolute;
+  }
+}
+
+@mixin arrow-up ($size, $color, $background: transparent) {
+  @include arrow-base($size, $color, $background);
+  &:after {
+    top: -($size);
+    left:50%;
+    margin-left:-($size);
+    border-left: $size solid $background;
+    border-right: $size solid $background;
+    border-bottom: $size solid $color;
+  } 
+}
+
+@mixin arrow-down ($size, $color, $background: transparent) {
+  @include arrow-base($size, $color, $background);
+  &:after {
+    bottom: -($size);
+    left:50%;
+    margin-left:-($size);
+    border-left: $size solid $background;
+    border-right: $size solid $background;
+    border-top: $size solid $color;
+  } 
+}
+
+@mixin arrow-left ($size, $color, $background: transparent) {
+  @include arrow-base($size, $color, $background);
+  &:after {
+    right: -($size);
+    top:50%;
+    margin-top:-($size);
+    border-top: $size solid $background;
+    border-left: $size solid $color;
+    border-bottom: $size solid $background;
+  } 
+}
+
+@mixin arrow-right ($size, $color, $background: transparent) {
+  @include arrow-base($size, $color, $background);
+  &:after {
+    left: -($size);
+    top:50%;
+    margin-top:-($size);
+    border-top: $size solid $background;
+    border-right: $size solid $color;
+    border-bottom: $size solid $background;
+  } 
+}

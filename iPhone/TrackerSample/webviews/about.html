@@ -1,0 +1,38 @@
+<html>
+<head>
+  <title>About Dino Deals</title>  
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width">
+</head>
+<body>
+	<section id="scroll" class="about">
+		<div>
+			<article>
+				<h3>About Geoloqi</h3>
+				<p>Geoloqi's location services and mobile SDKs provide developers with tools to make location-aware battery efficient mobile apps like DinoDeals.</p>
+				<a href="https://developers.geoloqi.com" class="button">Visit Geoloqi</a>
+			</article>
+			<article>
+				<h3>About Appcelerator</h3>
+				<p>Appcelerator provides mobile developers with an open-source SDK to develop cross-platform native mobile applications using open web technologies.</p>
+				<a href="http://www.appcelerator.com" class="button">Visit Appcelerator</a>
+			</article>
+			<article>
+				<h3>About Sqoot</h3>
+				<p>Sqoot aggregates over 30,000 deals and offers from over 100 providers.</p>
+				<a href="https://www.sqoot.com" class="button">Visit Sqoot</a>
+			</article>
+			<div class="spacer"></div>
+		</div>
+	</section>
+
+<script src="iscroll.js"></script>
+<script type="text/javascript">
+	function loaded() {
+		document.addEventListener('touchmove', function(e){ e.preventDefault(); });
+		myScroll = new iScroll('scroll');
+	}
+	document.addEventListener('DOMContentLoaded', loaded);
+</script>
+</body>
+</html>
