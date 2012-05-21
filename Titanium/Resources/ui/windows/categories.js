@@ -9,20 +9,11 @@ exports = (function(Config){
   categoriesWindow = Ti.UI.currentWindow,
   refreshButton = Ti.UI.createButton({ systemButton: Ti.UI.iPhone.SystemButton.REFRESH }),
   activityIndicator = Ti.UI.createActivityIndicator({ message: 'Loading...', style: Titanium.UI.iPhone.ActivityIndicatorStyle.DARK }),
-  xhr = Titanium.Network.createHTTPClient(),
   Geoloqi = categoriesWindow.Geoloqi;
   
-  // Set refresh button in menu bar
-  if(Ti.Platform.osname === "iphone"){
-    categoriesWindow.setRightNavButton(refreshButton);
-  
-    // Listen for click on refresh
-    refreshButton.addEventListener("click", function(e){
-      refreshCategories();
-    });
-  }
+  // Configure xhr object to talk to DinoDeals server
+  var xhr = Titanium.Network.createHTTPClient();
 
-  // Configure xhr object
   xhr.onload = function() {
     updateRows(JSON.parse(this.responseText).categories);
     activityIndicator.hide();
@@ -32,6 +23,26 @@ exports = (function(Config){
     Ti.API.error(error);
   };
 
+  // Platform specific refresh button
+  if(Ti.Platform.osname === "iphone"){
+    categoriesWindow.setRightNavButton(refreshButton);
+  
+    // Listen for click on refresh
+    refreshButton.addEventListener("click", function(e){
+      refreshCategories();
+    });
+  } else {
+    var activity = categoriesWindow.activity;
+    activity.onCreateOptionsMenu = function(e){
+      var menu = e.menu;
+      var menuItem = menu.add({ title: "Refresh" });
+      menuItem.addEventListener("click", function(e) {
+        refreshCategories();
+      });
+    };
+  }
+
+  // Update the list of categories from the server
   function refreshCategories(){
     Ti.API.info("Refreshing Categories");
     xhr.open("GET", Config.baseURL+"/api/categories");
@@ -39,6 +50,7 @@ exports = (function(Config){
     xhr.send();
   }
 
+  // Build new tableViewRows from the server response
   function updateRows(categories){
     rows = [header];
     if(categories){
@@ -80,6 +92,7 @@ exports = (function(Config){
     tableView.setData(rows);
   }
 
+  // Create a table view for the categories
   function createTableView(){
     Ti.API.info("Creating Table View");
     tableView = Ti.UI.createTableView({
@@ -91,6 +104,7 @@ exports = (function(Config){
     categoriesWindow.add(tableView);
   }
 
+  // Subscribe the user to a layer
   function subscribe(layerid){
     Ti.API.info("Subscribing to "+ layerid);
     Geoloqi.session.postRequest("layer/subscribe/"+layerid, {}, {
@@ -102,10 +116,11 @@ exports = (function(Config){
       }
     });
   }
-
+  
+  // Unsubscribe the user to a layer
   function unsubscribe(layerid){
     Ti.API.info("Unsubscribing from "+ layerid);
-    Geoloqi.session.postRequest("layer/subscribe/"+layerid, {}, {
+    Geoloqi.session.postRequest("layer/unsubscribe/"+layerid, {}, {
       onSuccess: function(data){
         Ti.API.info(data);
       },

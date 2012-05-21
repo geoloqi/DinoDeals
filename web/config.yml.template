@@ -1,7 +1,6 @@
----
 geoloqi:
-  client_id: YOUR GEOLOQI APP CLIENT ID
-  client_secret: YOUR GEOLOQI APP CLIENT SECRET
-  app_access_token: YOUR GEOLOQI APP ACCESS TOKEN
+  client_id: <%= ENV["geoloqi_client_id"] %>
+  client_secret: <%= ENV["geoloqi_client_secret"] %>
+  app_access_token: <%= ENV["geoloqi_application_token"] %>
 sqoot:
-  affiliate_token: SQOOT AFFILIATE TOKEN
+  affiliate_token: <%= ENV["sqoot_affiliate_token"] %>
