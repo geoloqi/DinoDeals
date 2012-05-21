@@ -16,21 +16,22 @@ geoloqi.init({
     Ti.API.info("Username: " + geoloqi.session.getUsername());
     Ti.API.info("Anonymous User?: " + geoloqi.session.isAnonymous());
     
-    Ti.Network.registerForPushNotifications({
-      types:[
-        Titanium.Network.NOTIFICATION_TYPE_ALERT
-      ],
-      callback: function(data){
-        geoloqi.iOS.handlePush(data);
-      },
-      success:function(data){
-        geoloqi.iOS.registerDeviceToken(data.deviceToken);
-      },
-      error: function(data){
-        Ti.API.error("Could Not Register For Push" + data.error + data.type);
-      }
-    });
-    
+    if (Ti.Platform.osname !== "android") {
+	    Ti.Network.registerForPushNotifications({
+	      types:[
+	        Titanium.Network.NOTIFICATION_TYPE_ALERT
+	      ],
+	      callback: function(data){
+	        geoloqi.iOS.handlePush(data);
+	      },
+	      success:function(data){
+	        geoloqi.iOS.registerDeviceToken(data.deviceToken);
+	      },
+	      error: function(data){
+	        Ti.API.error("Could Not Register For Push" + data.error + data.type);
+	      }
+	    });
+    }
   },
   onFailure: function(){
     Ti.API.error("Geoloqi Config Failed");
