@@ -14,7 +14,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "497120CB1490755B0046BDA3"
-               BuildableName = "EverydayCity.app"
+               BuildableName = "DealsDemo.app"
                BlueprintName = "DealsDemo"
                ReferencedContainer = "container:DealsDemo.xcodeproj">
             </BuildableReference>
@@ -42,7 +42,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "497120CB1490755B0046BDA3"
-            BuildableName = "EverydayCity.app"
+            BuildableName = "DealsDemo.app"
             BlueprintName = "DealsDemo"
             ReferencedContainer = "container:DealsDemo.xcodeproj">
          </BuildableReference>
@@ -61,7 +61,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "497120CB1490755B0046BDA3"
-            BuildableName = "EverydayCity.app"
+            BuildableName = "DealsDemo.app"
             BlueprintName = "DealsDemo"
             ReferencedContainer = "container:DealsDemo.xcodeproj">
          </BuildableReference>
@@ -79,7 +79,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "497120CB1490755B0046BDA3"
-            BuildableName = "EverydayCity.app"
+            BuildableName = "DealsDemo.app"
             BlueprintName = "DealsDemo"
             ReferencedContainer = "container:DealsDemo.xcodeproj">
          </BuildableReference>

@@ -32,14 +32,28 @@
     webView.scrollView.bounces = NO;
     
     // Do any additional setup after loading the view from its nib.
-    NSURL *url = [NSURL URLWithString:@"https://deals.geoloqi.com/history"];
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url 
-                                                                cachePolicy:NSURLRequestReloadIgnoringCacheData 
-                                                            timeoutInterval:10.0];
-    [request setValue:[NSString stringWithFormat:@"Bearer %@", [LQSession savedSession].accessToken] forHTTPHeaderField:@"Authorization"];
-    [self.webView loadRequest:request];
+
     
-    [self reloadCurrentLocation];
+    [webView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"activity" 
+                                                                                                             ofType:@"html"]
+                                                                 isDirectory:NO]]];
+    
+//    NSString *path = [[NSBundle mainBundle] bundlePath];
+//    NSURL *baseURL = [NSURL fileURLWithPath:path];
+//    
+//    NSString *htmlFile = [[NSBundle mainBundle] pathForResource:@"activity" ofType:@"html" inDirectory:nil];
+//    NSString *htmlString = [NSString stringWithContentsOfFile:htmlFile encoding:NSUTF8StringEncoding error:nil];
+//    [self.webView loadHTMLString:htmlString baseURL:baseURL];
+
+    
+//    NSURL *url = [NSURL URLWithString:@"https://deals.geoloqi.com/history"];
+//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url 
+//                                                                cachePolicy:NSURLRequestReloadIgnoringCacheData 
+//                                                            timeoutInterval:10.0];
+//    [request setValue:[NSString stringWithFormat:@"Bearer %@", [LQSession savedSession].accessToken] forHTTPHeaderField:@"Authorization"];
+//    [self.webView loadRequest:request];
+    
+    // [self reloadCurrentLocation];
     
     [[LQTracker sharedTracker] setProfile:LQTrackerProfilePassive];
 }
@@ -58,9 +72,26 @@
 
 # pragma mark -
 
+-(BOOL) webView:(UIWebView *)inWeb shouldStartLoadWithRequest:(NSURLRequest *)inRequest navigationType:(UIWebViewNavigationType)inType {
+    NSLog(@"Request: %@", inRequest);
+    NSLog(@"Scheme: %@", inRequest.URL.scheme);
+    
+    if([inRequest.URL.scheme isEqualToString:@"dinodeals"]) {
+        [appDelegate.tabBarController setSelectedIndex:1];
+        return NO;
+    }
+    
+    if ( inType == UIWebViewNavigationTypeLinkClicked ) {
+        [[UIApplication sharedApplication] openURL:[inRequest URL]];
+        return NO;
+    }
+    
+    return YES;
+}
+
 - (IBAction)reloadWasTapped:(UIButton *)sender {
     [self.webView reload];
-    [self reloadCurrentLocation];
+    // [self reloadCurrentLocation];
 }
 
 - (void)reloadCurrentLocation {

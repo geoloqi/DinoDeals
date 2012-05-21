@@ -54,6 +54,16 @@
 				<string>fb286536824758724</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>Dino Deals</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>dinodeals</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>12.120</string>
