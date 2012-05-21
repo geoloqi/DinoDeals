@@ -1,19 +1,30 @@
+# Require the environment file
 require File.join(File.dirname(__FILE__), 'env')
 
+# Before each route is fun create a new geoloqi session for the user.
 before do
   http_auth = request.env['HTTP_AUTHORIZATION'] || params[:lq_access_token]
   @geoloqi = Geoloqi::Session.new :access_token => (http_auth ? http_auth.gsub('Bearer ', '') : nil)
 end
 
+# Simple Hello World route
 get '/' do
-  'hello'
+  'Hello World'
 end
 
+# The Titanium App will request this to get a list of categories the user is subscribed to
 get '/api/categories' do
-  puts "Categories"
+  
+  # Get a list of all the layers created by the application
   layers = Geoloqi::Session.new(:access_token => CONFIG['geoloqi']['app_access_token']).get('layer/list')[:layers]
+  
+  # Get a list of all the layers the user is  subscribed to
   subscribed = @geoloqi.get('layer/subscriptions')
+  
+  # Start building a response
   resp = { :categories => [] }
+  
+  # For each layer add a entry to the response with layer id, layer name, and subscription status
   layers.each do |l|
     resp[:categories].push({
       :id => l[:layer_id],
@@ -21,35 +32,8 @@ get '/api/categories' do
       :subscribed => !subscribed.select {|s| s[:layer_id] == l[:layer_id]}.empty?
     })
   end
+  
+  # Respond with JSON
   content_type :json
-  puts "Response"
   resp.to_json
-end
-
-get '/api/nearby' do
-  subscribed = @geoloqi.get('layer/subscriptions')
-  
-  latitude = params[:latitude]
-  longitude = params[:longitudes]
-  
-  resp = { :deals => [] }
-  
-  batch = @geoloqi.batch do
-    subscribed.each do |layer|
-      if layer.type === "normal"
-        get("place/nearby", {
-          latitude: latitude,
-          longitude: longitude,
-          layer_id: layer[:layer_id],
-          distance: 1500,
-          limit: 100
-        })
-      end
-    end
-  end
-  
-  batch.each do |request|
-    request[:body][:places]
-  end
-
 end

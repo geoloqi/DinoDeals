@@ -20,7 +20,17 @@ exports = (function(Config){
     refreshButton.addEventListener("click", function(e){
       refreshCategories();
     });
-  }
+  }	else {
+		var activity = categoriesWindow.activity;
+		activity.onCreateOptionsMenu = function(e){
+  		var menu = e.menu;
+  		var menuItem = menu.add({ title: "Refresh" });
+  		menuItem.addEventListener("click", function(e) {
+  			
+    		refreshCategories();
+  		});
+		};
+	}
 
   // Configure xhr object
   xhr.onload = function() {
@@ -105,7 +115,7 @@ exports = (function(Config){
 
   function unsubscribe(layerid){
     Ti.API.info("Unsubscribing from "+ layerid);
-    Geoloqi.session.postRequest("layer/subscribe/"+layerid, {}, {
+    Geoloqi.session.postRequest("layer/unsubscribe/"+layerid, {}, {
       onSuccess: function(data){
         Ti.API.info(data);
       },

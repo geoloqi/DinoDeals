@@ -51,6 +51,7 @@ var DinoDeals = {
     title: "Activity",
     barColor: "#15a6e5",
     backgroundColor:"transparent",
+    backgroundImage:"/images/BkgWhite.png",
     Config: Config,
     Geoloqi:Geoloqi
   });
@@ -60,7 +61,8 @@ var DinoDeals = {
     url: "ui/windows/map.js",
     title: "Nearby Deals",
     barColor: "#15a6e5",
-    backgroundColor:"transparent"
+    backgroundColor:"transparent",
+    backgroundImage:"/images/BkgWhite.png"
   });
   
   // create a window to hold list of categories
@@ -69,6 +71,7 @@ var DinoDeals = {
     title: "Categories",
     barColor: "#15a6e5",
     backgroundColor:"transparent",
+    backgroundImage:"/images/BkgWhite.png",
     Geoloqi: Geoloqi
   });
 
@@ -78,6 +81,7 @@ var DinoDeals = {
     title: "About",
     barColor: "#15a6e5",
     backgroundColor:"transparent",
+    backgroundImage:"/images/BkgWhite.png",
     Geoloqi: Geoloqi
   });
 
@@ -87,23 +91,23 @@ var DinoDeals = {
   // activity view tab
   DinoDeals.Tabs.activity = Ti.UI.createTab({
     title: 'Activity',
-    icon: '/images/tabs_categories.png',
+    icon: (Ti.Platform.osname === "android") ? Ti.App.Android.R.drawable.tabs_categories_drawable : '/images/tabs_categories.png',
     window: DinoDeals.Windows.activity
   });
   DinoDeals.tabGroup.addTab(DinoDeals.Tabs.activity);
-
+	
   // category view tab
   DinoDeals.Tabs.categories = Ti.UI.createTab({
     title: 'Categories',
-    icon: '/images/tabs_activity.png',
+    icon: (Ti.Platform.osname === "android") ? Ti.App.Android.R.drawable.tabs_activity_drawable : '/images/tabs_activity.png',
     window: DinoDeals.Windows.categories,
   });
   DinoDeals.tabGroup.addTab(DinoDeals.Tabs.categories);
-
+	
    // about view tab
   DinoDeals.Tabs.about = Ti.UI.createTab({
     title: 'About',
-    icon: '/images/tabs_about.png',
+    icon: (Ti.Platform.osname === "android") ? Ti.App.Android.R.drawable.tabs_about_drawable : '/images/tabs_about.png',
     window: DinoDeals.Windows.about,
   });
   DinoDeals.tabGroup.addTab(DinoDeals.Tabs.about);
