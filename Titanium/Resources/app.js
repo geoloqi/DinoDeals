@@ -1,30 +1,28 @@
 // import the Geolqoi Module
-var Geoloqi = require('ti.geoloqi');
+var geoloqi = require('ti.geoloqi');
 var Config = require("config");
 
-Ti.UI.setBackgroundImage("/images/BkgWhite.png");
-
-Geoloqi.init({
+geoloqi.init({
   clientId: Config.clientId,
   clientSecret: Config.clientSecret,
-  trackingProfile: "PASSIVE",
+  trackingProfile: "PASSIVE"
 },{
   onSuccess: function(){
-    Ti.API.info("Tracking Profile: " + Geoloqi.tracker.getProfile());
-    Ti.API.info("Access Token: " + Geoloqi.session.getAccessToken());
-    Ti.API.info("User ID: " + Geoloqi.session.getUserId());
-    Ti.API.info("Username: " + Geoloqi.session.getUsername());
-    Ti.API.info("Anonymous?: " + Geoloqi.session.isAnonymous());
+    Ti.API.info("Tracking Profile: " + geoloqi.tracker.getProfile());
+    Ti.API.info("Access Token: " + geoloqi.session.getAccessToken());
+    Ti.API.info("User ID: " + geoloqi.session.getUserId());
+    Ti.API.info("Username: " + geoloqi.session.getUsername());
+    Ti.API.info("Anonymous User?: " + geoloqi.session.isAnonymous());
     
     Ti.Network.registerForPushNotifications({
-    	types:[
+      types:[
         Titanium.Network.NOTIFICATION_TYPE_ALERT
       ],
       callback: function(data){
-        Geoloqi.iOS.handlePush(data);
+        geoloqi.iOS.handlePush(data);
       },
       success:function(data){
-        Geoloqi.iOS.registerDeviceToken(data.deviceToken);
+        geoloqi.iOS.registerDeviceToken(data.deviceToken);
       },
       error: function(data){
         Ti.API.error("Could Not Register For Push" + data.error + data.type);
@@ -53,7 +51,7 @@ var DinoDeals = {
     backgroundColor:"transparent",
     backgroundImage:"/images/BkgWhite.png",
     Config: Config,
-    Geoloqi:Geoloqi
+    geoloqi:geoloqi
   });
 
   // create a window to hold a map of nearby deals
@@ -72,7 +70,7 @@ var DinoDeals = {
     barColor: "#15a6e5",
     backgroundColor:"transparent",
     backgroundImage:"/images/BkgWhite.png",
-    Geoloqi: Geoloqi
+    geoloqi: geoloqi
   });
 
   // create a window to hold about section
@@ -82,7 +80,7 @@ var DinoDeals = {
     barColor: "#15a6e5",
     backgroundColor:"transparent",
     backgroundImage:"/images/BkgWhite.png",
-    Geoloqi: Geoloqi
+    geoloqi: geoloqi
   });
 
   // create tab group
@@ -100,7 +98,7 @@ var DinoDeals = {
   DinoDeals.Tabs.categories = Ti.UI.createTab({
     title: 'Categories',
     icon: (Ti.Platform.osname === "android") ? Ti.App.Android.R.drawable.tabs_activity_drawable : '/images/tabs_activity.png',
-    window: DinoDeals.Windows.categories,
+    window: DinoDeals.Windows.categories
   });
   DinoDeals.tabGroup.addTab(DinoDeals.Tabs.categories);
 	
@@ -108,7 +106,7 @@ var DinoDeals = {
   DinoDeals.Tabs.about = Ti.UI.createTab({
     title: 'About',
     icon: (Ti.Platform.osname === "android") ? Ti.App.Android.R.drawable.tabs_about_drawable : '/images/tabs_about.png',
-    window: DinoDeals.Windows.about,
+    window: DinoDeals.Windows.about
   });
   DinoDeals.tabGroup.addTab(DinoDeals.Tabs.about);
 	
