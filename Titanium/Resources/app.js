@@ -5,6 +5,7 @@ var Config = require("config");
 geoloqi.init({
   clientId: Config.clientId,
   clientSecret: Config.clientSecret,
+  pushAccount: Config.pushAccount,
   pushIcon: "push_icon",
   trackingProfile: "PASSIVE"
 },{
