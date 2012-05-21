@@ -9,7 +9,7 @@ exports = (function(Config){
   categoriesWindow = Ti.UI.currentWindow,
   refreshButton = Ti.UI.createButton({ systemButton: Ti.UI.iPhone.SystemButton.REFRESH }),
   activityIndicator = Ti.UI.createActivityIndicator({ message: 'Loading...', style: Titanium.UI.iPhone.ActivityIndicatorStyle.DARK }),
-  Geoloqi = categoriesWindow.Geoloqi;
+  geoloqi = categoriesWindow.geoloqi;
   
   // Configure xhr object to talk to DinoDeals server
   var xhr = Titanium.Network.createHTTPClient();
@@ -46,7 +46,7 @@ exports = (function(Config){
   function refreshCategories(){
     Ti.API.info("Refreshing Categories");
     xhr.open("GET", Config.baseURL+"/api/categories");
-    xhr.setRequestHeader("Authorization", "Bearer " + Geoloqi.session.getAccessToken());
+    xhr.setRequestHeader("Authorization", "Bearer " + geoloqi.session.getAccessToken());
     xhr.send();
   }
 
@@ -107,7 +107,7 @@ exports = (function(Config){
   // Subscribe the user to a layer
   function subscribe(layerid){
     Ti.API.info("Subscribing to "+ layerid);
-    Geoloqi.session.postRequest("layer/subscribe/"+layerid, {}, {
+    geoloqi.session.postRequest("layer/subscribe/"+layerid, {}, {
       onSuccess: function(data){
         Ti.API.info(data);
       },
@@ -120,7 +120,7 @@ exports = (function(Config){
   // Unsubscribe the user to a layer
   function unsubscribe(layerid){
     Ti.API.info("Unsubscribing from "+ layerid);
-    Geoloqi.session.postRequest("layer/unsubscribe/"+layerid, {}, {
+    geoloqi.session.postRequest("layer/unsubscribe/"+layerid, {}, {
       onSuccess: function(data){
         Ti.API.info(data);
       },
