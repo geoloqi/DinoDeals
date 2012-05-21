@@ -1,0 +1,108 @@
+@import "preboot.scss";
+@import "reset.scss";
+
+$blue: #27ade7;
+$darkBlue: darken($blue, 15);
+
+html, body, section{
+	position: relative;
+	top:0;
+	left:0;
+}
+
+section {
+	@include box-sizing("border-box");
+	overflow: hidden;
+	position: absolute;
+	top:0;
+	left:0;
+	bottom:0;
+	right:0;
+	background: $white;
+	article {
+		@include clearfix();
+		@include background-clip("padding-box");
+		color: $darkerGray;
+		border-bottom: 1px solid $lightGray;
+		padding: 15px 8px;
+		display: block;
+		text-decoration:none;
+		position: relative;
+		&:last-of-type {
+			border-bottom: none;
+		}
+		img {
+			float: left;
+		}
+		p, small {
+			display: block;
+			//margin: 0 96px 0 38px;
+			margin: 0 96px 0 0;
+		}
+		p {
+			font-size:.85em;
+		}
+		small {
+			font-size:.75em;
+			color:$lightGray;
+		}
+	}
+}
+
+section.no-deals {
+	text-align:center;
+	p {
+		margin:1.5em;
+		&:last-of-type {
+			margin-bottom:2em;
+		}
+	}
+	a.button {
+		font-size:1.25em;
+		right:auto;
+		display:inline;
+		position: static;
+	}
+}
+
+section.about {
+	background: transparent;
+	article {
+		@include border-radius(4px);
+		background: $white;
+		margin: 10px;
+		border: 1px solid $lightGray;
+		h3 {
+			margin-top: 0;
+			margin-bottom: .5em;
+		}
+		p {
+			margin: 0;
+		}
+		a.button {
+			position: static;
+			display: block;
+			float: left;
+			margin-top: 1em;
+		}
+	}
+	div.spacer{
+		padding-top: 10px;
+	}
+}
+
+a.button {
+	@include border-radius(4px);
+	position: absolute;
+	display: block;
+	background: $blue;
+	color: $white;
+	padding: 0.5em 1em;
+	text-decoration: none;
+	font-size: .85em;
+	border: 1px solid $darkBlue;
+	top: 45%;
+	margin-top: -1em;
+	right: 10px;
+	font-weight: 700;
+}

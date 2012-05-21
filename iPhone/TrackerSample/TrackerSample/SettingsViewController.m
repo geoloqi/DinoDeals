@@ -26,7 +26,7 @@
     loadingView.hidden = NO;
 	// Do any additional setup after loading the view, typically from a nib.
 
-    NSURL *url = [NSURL URLWithString:@"https://deals.geoloqi.com/api/categories"];
+    NSURL *url = [NSURL URLWithString:@"https://dinodeals.geoloqi.com/api/categories"];
 	NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url 
                                                                 cachePolicy:NSURLRequestReloadIgnoringCacheData 
                                                             timeoutInterval:10.0];
