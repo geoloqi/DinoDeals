@@ -1,21 +1,14 @@
-...
+## DinoDeals
 
-## Running
+Dino Deals alerts you to nearby deals by sending you a push notification when 
+you are within a few blocks of a deal! Offers are aggregated from most of the 
+major deals providers, giving you a wide variety of options to choose from!      
 
-...
 
-### Android
+## Titanium
 
-You can compile and run this program from within the Titanium IDE or by
-using the Titanium command-line tools. For the latter, simply run the
-following command from your terminal:
+Read about our Titanium module here:
 
-    $ titanium run --dir=~/path/to/project --platform=android --android=/path/to/android-sdk
+http://developers.geoloqi.com/titanium
 
-> Using the command-line tools should force Titanium to launch the built
-> application on a running emulator, instead of creating and launching a
-> new AVD.
 
-### iOS
-
-...
