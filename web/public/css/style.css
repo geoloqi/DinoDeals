@@ -1,0 +1,110 @@
+body {
+  font: 13px "lucida grande",tahoma,verdana,arial,sans-serif;
+  background: url(/img/tile.png);
+}
+
+.hero-unit {
+  background: transparent;
+  padding-top: 0;
+}
+ 
+.hero-unit .inner {
+  background: url(/img/Market-Banner-Large-Transparent-Background.png) center center no-repeat;
+  height: 500px;
+}
+
+.hero-unit h1 {
+  display: none;
+}
+
+
+#available-on-the-app-store {
+  width: 250px;
+  margin-top: 30px;
+}
+
+
+.main-page-content .inside {
+  border: 1px solid #155876;
+  background: white;
+  border-bottom-width: 2px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  padding: 10px;
+}
+
+
+
+
+/** 
+ * footer
+ */
+#copyright {
+  line-height: 14px;
+  margin:4px 0 0;
+}
+
+.footer {
+  background: #151515;
+  padding: 5px 0 5px 0;
+  min-height: 40px;
+}
+.footer .fill {
+  display: block;
+}
+.footer li {
+  line-height: 24px;
+}
+.footer h5 {
+  color: #ddd;
+}
+.footer li, .footer h5 {
+  font-size: 13px;
+}
+.footer a {
+  color: gray;
+}
+
+.right {
+  float: right;
+}
+@media (max-width: 767px) and (max-width: 979px) {
+  .footer {
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+  .right {
+    clear: both;
+    float: none;
+  }
+}
+
+nav.small a {
+  margin-right: 20px;
+}
+
+
+
+/** 
+ * Sticky footer 
+ */
+html, body {
+  height: 100%;
+}
+.page-wrapper {
+  min-height: 100%;
+  margin: 0 auto; 
+}
+#main {
+  padding-bottom:50px;
+}
+.footer {
+  position: relative;
+  clear: both;
+  margin-top:-50px;
+}
+
+.page-wrapper {
+  position: relative;
+}
