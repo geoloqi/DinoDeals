@@ -11,6 +11,8 @@
 5. `heroku config:add geoloqi_application_token=YOUR_GEOLOQI_APPLICATION_ACCESS_TOKEN`
 6. `heroku config:add sqoot_affiliate_token=YOUR_SQOOT_AFFILIATE_TOKEN`
 
+Squoot is a paid service with a 30 day free trial. If you do not want to pay for Sqoot after 30 days you can use Geoloqis affiliate token `3c5gx9`
+
 # Setup cron to update deals nightly
 
 6. `heroku addons:add cron:daily`
