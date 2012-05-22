@@ -7,9 +7,9 @@ before do
   @geoloqi = Geoloqi::Session.new :access_token => (http_auth ? http_auth.gsub('Bearer ', '') : nil)
 end
 
-# Simple Hello World route
+# Home page
 get '/' do
-  'Hello World'
+  erb :index
 end
 
 # The Titanium App will request this to get a list of categories the user is subscribed to
