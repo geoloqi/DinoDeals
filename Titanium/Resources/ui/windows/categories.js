@@ -67,6 +67,11 @@ exports = (function(Config){
           text: category.name
         });
         
+        if (Ti.Platform.osname === "android") {
+        	// Override the label color on Android
+        	label.setColor("#222222");
+        }
+        
         var toggle = Ti.UI.createSwitch({
           right: "10dp",
           value: category.subscribed,
