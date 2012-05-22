@@ -1,4 +1,4 @@
-var Config = require("config");
+Ti.include("../../config.js");
 
 exports = (function(Config){
   // Setup some variables

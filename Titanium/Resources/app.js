@@ -1,6 +1,8 @@
 // import the Geolqoi Module
 var geoloqi = require('ti.geoloqi');
-var Config = require("config");
+//var Config = require("config");
+
+Ti.include('config.js');
 
 geoloqi.init({
   clientId: Config.clientId,
