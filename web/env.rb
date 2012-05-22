@@ -3,7 +3,7 @@ Bundler.require
 Bundler.require :development if development?
 
 # This one-liner will interpolate your config.yml file with ERB to fill in environment variables
-CONFIG = YAML.load(ERB.new(File.read(File.join(File.dirname(__FILE__), 'config.yml'))))
+CONFIG = YAML.load(ERB.new(File.read(File.join(File.dirname(__FILE__), 'config.yml'))).result)
 
 # Configure the Sqoot gem
 Sqoot.configure do |config|
