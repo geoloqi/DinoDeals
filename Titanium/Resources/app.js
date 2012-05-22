@@ -51,7 +51,7 @@ var DinoDeals = {
   // create a window to hold a webview for recent activity
   DinoDeals.Windows.activity = Ti.UI.createWindow({
     url: "ui/windows/activity.js",
-    title: "Activity",
+    title: "Deals",
     barColor: "#15a6e5",
     backgroundColor:"transparent",
     backgroundImage:"/images/BkgWhite.png",
@@ -93,7 +93,7 @@ var DinoDeals = {
 
   // activity view tab
   DinoDeals.Tabs.activity = Ti.UI.createTab({
-    title: 'Activity',
+    title: 'Deals',
     icon: (Ti.Platform.osname === "android") ? Ti.App.Android.R.drawable.tabs_categories_drawable : '/images/tabs_categories.png',
     window: DinoDeals.Windows.activity
   });
