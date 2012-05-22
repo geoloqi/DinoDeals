@@ -1,6 +1,5 @@
 // import the Geolqoi Module
 var geoloqi = require('ti.geoloqi');
-//var Config = require("config");
 
 Ti.include('config.js');
 
@@ -36,7 +35,7 @@ geoloqi.init({
     }
   },
   onFailure: function(){
-    Ti.API.error("Geoloqi Config Failed");
+    Ti.API.error("Geoloqi init failed or timed out!");
   }
 });
 

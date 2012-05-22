@@ -44,6 +44,7 @@ geoloqi.get('layer/list')[:layers].each do |layer|
                          :latitude => offer[:locations][0][:latitude],
                          :longitude => offer[:locations][0][:longitude],
                          :radius => DEAL_PLACE_RADIUS,
+                         :one_time => 1,
                          :place_key => offer[:id],
                          :place_layer_id => layer[:layer_id],
                          :place_name => offer[:locations][0][:name] }

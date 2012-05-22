@@ -38,6 +38,8 @@
     </iphone>
     <android xmlns:android="http://schemas.android.com/apk/res/android">
     	<manifest>
+    		<uses-sdk android:minSdkVersion="7" />
+    		
     		<!-- NOTE: These permissions are required if you wish to enable C2DM support in the Geoloqi SDK. -->
 		    <permission
 		        android:name="com.geoloqi.deals.permission.C2D_MESSAGE"

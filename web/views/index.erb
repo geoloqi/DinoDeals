@@ -1,0 +1,116 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!-- Consider adding a manifest.appcache: h5bp.com/d/Offline -->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">    
+    <title>DinoDeals</title>
+    <% if @_meta_description %><meta name="description" content="<%= @_meta_description %>"><% end %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:url" content="<%= request.url %>">
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css" />
+    <% if CONFIG['ga_id'] %>
+      <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', '<%= $config['ga_id'] %>']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+      </script>
+    <% end %>
+  </head>
+  <body>
+  <div class="page-wrapper">
+<div id="main">
+
+
+
+
+<div class="container">
+
+  <div class="hero-unit">
+    <div class="inner">
+      <div class="row">
+        <div class="span3 offset1">
+          <div id="header-caption">
+            <h1>DinoDeals</h1>
+          </div>
+          <!-- <img src="/img/soon-get-available-on-the-app-store.png" id="available-on-the-app-store" /> -->
+          <!-- <a href="/everyday-city-itunes"><img src="/img/get-available-on-the-app-store.png" id="available-on-the-app-store" /></a> -->
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="offset2 span5 main-page-content">
+      <div class="inside">
+
+        <h2>DinoDeals sends you alerts when you are nearby great deals!</h2>
+
+        <p>DinoDeals alerts you to nearby deals by sending you a push notification when you are within a few blocks of a deal! Offers are aggregated from most of the major deals providers, giving you a wide variety of options to choose from!</p>
+
+        <h3>How does it work?</h3>
+        <p>The DinoDeals iPhone app runs in the background 
+        and detects when you're nearby deals from the categories you've subscribed to. When you get nearby a deal, you'll receive a push notification and see the deal in your "deals" tab. All without draining your battery!</p>
+
+        <h3>How was it built?</h3>
+        <ul>
+          <li>DinoDeals uses the <a href="https://developers.geoloqi.com/titanium">Geoloqi SDK</a>.</li>
+          <li>and was built using the <a href="http://appcelerator.com">Titanium</a> framework</li>
+          <li>You can <a href="https://github.com/geoloqi/DinoDeals">download the source code</a> here to make your own battery-safe deals application!</li>
+        </ul>
+
+        <h3>Can I use it now?</h3>
+        <p>DinoDeals is coming soon to the iTunes market</p>
+
+      </div>
+    </div>
+    <div class="span3">
+      <a href="http://loqi.me/dinodeals-source"><img src="/img/iPhone-app-screenshot.png" class="screenshot-main" width="240"></a>
+    </div>  
+  </div>
+
+</div>
+
+
+
+</div>
+</div><!-- page-wrapper -->
+
+<div class="footer bar bottom">
+  <div class="fill">
+    <div class="container">
+      <div class="row">
+        <div class="span12">
+          <nav class="small">
+            <a href="https://geoloqi.com/blog/">Geoloqi Blog</a>
+            <a href="https://community.geoloqi.com/">Community Support</a>
+            <a href="https://geoloqi.com/press">Press</a>
+            <a href="https://developers.geoloqi.com">Developers</a>
+            <a href="https://geoloqi.com/privacy">Privacy Policy</a>
+          </nav>
+          <p id="copyright" class="right">
+            <small>DinoDeals is powered by the <a href="https://developers.geoloqi.com">Geoloqi Platform</a>
+              and built using <a href="http://appcelerator.com">Titanium</a>.
+              <br>&copy; Copyright 2012 <a href="https://geoloqi.com">Geoloqi Inc.</a>
+            </small>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </body>
+</html>
