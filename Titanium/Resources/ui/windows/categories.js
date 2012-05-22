@@ -32,14 +32,45 @@ exports = (function(Config){
       refreshCategories();
     });
   } else {
-    var activity = categoriesWindow.activity;
-    activity.onCreateOptionsMenu = function(e){
-      var menu = e.menu;
-      var menuItem = menu.add({ title: "Refresh" });
-      menuItem.addEventListener("click", function(e) {
-        refreshCategories();
-      });
-    };
+	var OPT_ENABLE = 1, OPT_DISABLE = 2;
+	var categories = categoriesWindow.activity;
+
+	categories.onCreateOptionsMenu = function(e){
+		var menu, menuItem;
+
+		menu = e.menu;
+
+		// Refresh		
+		menuItem = menu.add({ title: "Refresh" });
+		menuItem.addEventListener("click", function(e) {
+			webview.evalJS("window.location.reload();");
+		});
+		
+		// Disable location
+		menuItem = menu.add({ title: "Disable Location", itemId: OPT_DISABLE });
+		menuItem.addEventListener("click", function(e) {
+			geoloqi.tracker.setProfile("OFF");
+		});
+				
+		// Enable location
+		menuItem = menu.add({ title: "Enable Location", itemId: OPT_ENABLE });
+		menuItem.addEventListener("click", function(e) {
+			geoloqi.tracker.setProfile("PASSIVE");
+		});
+	};
+	
+	categories.onPrepareOptionsMenu = function(e) {
+		var menu = e.menu;
+		
+		// Toggle the correct menu item visibility
+		if (geoloqi.tracker.getProfile() === "OFF") {
+			menu.findItem(OPT_DISABLE).setVisible(false);
+			menu.findItem(OPT_ENABLE).setVisible(true);
+		} else {
+			menu.findItem(OPT_DISABLE).setVisible(true);
+			menu.findItem(OPT_ENABLE).setVisible(false);	
+		}
+	};
   }
 
   // Update the list of categories from the server
