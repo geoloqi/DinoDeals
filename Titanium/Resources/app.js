@@ -35,7 +35,7 @@ geoloqi.init({
     }
   },
   onFailure: function(){
-    Ti.API.error("Geoloqi Config Failed");
+    Ti.API.error("Geoloqi init failed or timed out!");
   }
 });
 
