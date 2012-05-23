@@ -1,11 +1,31 @@
 body {
-  font: 13px "lucida grande",tahoma,verdana,arial,sans-serif;
+  font: 15px "lucida grande",tahoma,verdana,arial,sans-serif;
   background: url(/img/tile.png);
+}
+
+.main-page-content a {
+  color:white;
+  text-shadow:0 1px 0 #137fae;
+  border-bottom:1px solid white;
+}
+
+.main-page-content a:hover {
+  border-bottom-color: #444;
+  color:#444;
+}
+
+p {
+  font-size:15px;
+  line-height:24px;
 }
 
 .hero-unit {
   background: transparent;
   padding-top: 0;
+  padding-bottom:0;
+  margin-bottom:0;
+  margin-top:0;
+
 }
  
 .hero-unit .inner {
@@ -17,21 +37,20 @@ body {
   display: none;
 }
 
+h2 {
+  margin:1em 0;
+  color:white;
+  text-shadow:0 1px 0 #137fae;
+}
 
 #available-on-the-app-store {
   width: 250px;
   margin-top: 30px;
 }
 
-
-.main-page-content .inside {
-  border: 1px solid #155876;
-  background: white;
-  border-bottom-width: 2px;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  padding: 10px;
+.main-page-content  {
+  color:white;
+  text-shadow:0 1px 0 #137fae;
 }
 
 
@@ -43,12 +62,14 @@ body {
 #copyright {
   line-height: 14px;
   margin:4px 0 0;
+  text-align:right;
 }
 
 .footer {
   background: #151515;
   padding: 5px 0 5px 0;
   min-height: 40px;
+  font-size:12px;
 }
 .footer .fill {
   display: block;
@@ -70,6 +91,18 @@ body {
   float: right;
 }
 @media (max-width: 767px) and (max-width: 979px) {
+  .hero-unit {
+    padding:0;
+
+  }
+  .hero-unit .inner {
+    background-size:800px auto;
+    background-position:50% 0;
+    height:400px;
+  }
+  h2 {
+    padding:0 20px;
+  }
   .footer {
     padding-left: 6px;
     padding-right: 6px;
@@ -82,15 +115,41 @@ body {
 
 nav.small a {
   margin-right: 20px;
+  line-height:42px;
 }
 
+#phone-image {
+  display: block;
+  margin:0 auto;
+}
 
+#phone-image img{
+  display: block;
+  margin:0 auto;
+}
 
+@media (max-width: 767px) {
+  .main-page-content{
+    padding:0 20px;
+  }
+  .footer, #copyright {
+    text-align:center;
+
+  }
+  nav.small a {
+    margin:0 20px;
+  }
+  #copyright {
+    margin:0 auto;
+    float:none;
+  }
+}
 /** 
  * Sticky footer 
  */
 html, body {
   height: 100%;
+  padding:0 !important;
 }
 .page-wrapper {
   min-height: 100%;
