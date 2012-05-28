@@ -4,20 +4,16 @@
 $blue: #27ade7;
 $darkBlue: darken($blue, 15);
 
-html, body, section{
-	position: relative;
-	top:0;
-	left:0;
-}
-
 section {
 	@include box-sizing("border-box");
-	overflow: hidden;
-	position: absolute;
-	top:0;
-	left:0;
-	bottom:0;
-	right:0;
+	&.deals{
+    overflow: hidden;
+    position: absolute;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+	}
 	background: $white;
 	article {
 		@include clearfix();
@@ -66,12 +62,9 @@ section.no-deals {
 }
 
 section.about {
-	background: transparent;
 	article {
-		@include border-radius(4px);
 		background: $white;
-		margin: 10px;
-		border: 1px solid $lightGray;
+		padding:20px 10px;
 		h3 {
 			margin-top: 0;
 			margin-bottom: .5em;
@@ -85,9 +78,6 @@ section.about {
 			float: left;
 			margin-top: 1em;
 		}
-	}
-	div.spacer{
-		padding-top: 10px;
 	}
 }
 

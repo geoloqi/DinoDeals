@@ -52,8 +52,7 @@ var DinoDeals = {
     url: "ui/windows/activity.js",
     title: "Deals",
     barColor: "#15a6e5",
-    backgroundColor:"transparent",
-    backgroundImage:"/images/BkgWhite.png",
+    backgroundColor:"#fff",
     Config: Config,
     geoloqi:geoloqi
   });
@@ -63,8 +62,7 @@ var DinoDeals = {
     url: "ui/windows/map.js",
     title: "Nearby Deals",
     barColor: "#15a6e5",
-    backgroundColor:"transparent",
-    backgroundImage:"/images/BkgWhite.png"
+    backgroundColor:"#fff",
   });
   
   // create a window to hold list of categories
@@ -72,8 +70,7 @@ var DinoDeals = {
     url: "ui/windows/categories.js",
     title: "Categories",
     barColor: "#15a6e5",
-    backgroundColor:"transparent",
-    backgroundImage:"/images/BkgWhite.png",
+		backgroundColor:"#fff",
     geoloqi: geoloqi
   });
 
@@ -82,8 +79,7 @@ var DinoDeals = {
     url: "ui/windows/about.js",
     title: "About",
     barColor: "#15a6e5",
-    backgroundColor:"transparent",
-    backgroundImage:"/images/BkgWhite.png",
+		backgroundColor:"#fff",
     geoloqi: geoloqi
   });
 
@@ -113,10 +109,6 @@ var DinoDeals = {
     window: DinoDeals.Windows.about
   });
   DinoDeals.tabGroup.addTab(DinoDeals.Tabs.about);
-	
-	Ti.App.addEventListener('openURL', function(e){
-    Ti.Platform.openURL(e.url);
-	});
 	
 	Ti.App.addEventListener('openCategories', function(e){
     DinoDeals.tabGroup.setActiveTab(1);

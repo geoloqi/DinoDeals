@@ -6,7 +6,6 @@
 </head>
 <body>
 	<section id="scroll" class="about">
-		<div>
 			<article>
 				<h3>About Geoloqi</h3>
 				<p>Geoloqi's location services and mobile SDKs provide developers with tools to make location-aware battery-efficient mobile apps like DinoDeals.</p>
@@ -22,17 +21,6 @@
 				<p>Sqoot aggregates over 30,000 deals and offers from over 100 providers.</p>
 				<a onclick="Titanium.App.fireEvent('openURL', { url: 'https://www.sqoot.com'});" class="button">Visit Sqoot</a>
 			</article>
-			<div class="spacer"></div>
-		</div>
 	</section>
-
-<script src="js/vendor/iscroll.js.raw"></script>
-<script type="text/javascript">
-	function loaded() {
-		document.addEventListener('touchmove', function(e){ e.preventDefault(); });
-		myScroll = new iScroll('scroll');
-	}
-	document.addEventListener('DOMContentLoaded', loaded);
-</script>
 </body>
 </html>

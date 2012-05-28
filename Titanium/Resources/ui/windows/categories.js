@@ -3,18 +3,19 @@ Ti.include("../../config.js");
 exports = (function(Config){
   // Setup some variables
   var exports = {},
-  header = Ti.UI.createTableViewSection({headerTitle:"Available Deals"}),
+  //header = Ti.UI.createTableViewSection({headerTitle:"Available Deals"}),
   rows = [],
   tableView = null,
   categoriesWindow = Ti.UI.currentWindow,
   refreshButton = Ti.UI.createButton({ systemButton: Ti.UI.iPhone.SystemButton.REFRESH }),
-  activityIndicator = Ti.UI.createActivityIndicator({ message: 'Loading...', style: Titanium.UI.iPhone.ActivityIndicatorStyle.DARK }),
+  activityIndicator = Ti.UI.createActivityIndicator({ style: Titanium.UI.iPhone.ActivityIndicatorStyle.DARK }),
   geoloqi = categoriesWindow.geoloqi;
   
   // Configure xhr object to talk to DinoDeals server
   var xhr = Titanium.Network.createHTTPClient();
 
   xhr.onload = function() {
+  	createTableView();
     updateRows(JSON.parse(this.responseText).categories);
     activityIndicator.hide();
   };
@@ -81,9 +82,25 @@ exports = (function(Config){
     xhr.send();
   }
 
+	toggleCallback = function(e){
+  	layerid = e.source.row.layerid;
+    subscribed = e.value;
+          
+  	if(subscribed){
+    	subscribe(layerid);
+    } else {
+    	unsubscribe(layerid);
+    }
+  }
+  
+  rowCallback = function(e){
+  	state = (e.row.children[1].value) ? false : true;
+    e.row.children[1].setValue(state);
+  }
+
   // Build new tableViewRows from the server response
   function updateRows(categories){
-    rows = [header];
+    //rows = [header];
     if(categories){
       for(var i=0; i < categories.length; i++) {
         category = categories[i];
@@ -95,7 +112,8 @@ exports = (function(Config){
         
         var label = Ti.UI.createLabel({
           left: "10dp",
-          text: category.name
+          text: category.name,
+          touchEnabled: false
         });
         
         if (Ti.Platform.osname === "android") {
@@ -109,16 +127,7 @@ exports = (function(Config){
           row: row
         });
 
-        toggle.addEventListener("change", function(e){
-          layerid = e.source.row.layerid;
-          subscribed = e.value;
-          
-          if(subscribed){
-            subscribe(layerid);
-          } else {
-            unsubscribe(layerid);
-          }
-        });
+        toggle.addEventListener("change", toggleCallback);
 
         row.add(label);
         row.add(toggle);
@@ -126,6 +135,9 @@ exports = (function(Config){
       }
     }
     tableView.setData(rows);
+    if(!tableView.added){
+    	categoriesWindow.add(tableView);
+    }
   }
 
   // Create a table view for the categories
@@ -133,11 +145,9 @@ exports = (function(Config){
     Ti.API.info("Creating Table View");
     tableView = Ti.UI.createTableView({
       data:rows,
-      style:Titanium.UI.iPhone.TableViewStyle.GROUPED,
-      backgroundColor:'transparent',
-      rowBackgroundColor:'white'
+      added: false
     });
-    categoriesWindow.add(tableView);
+    tableView.addEventListener("click", rowCallback);
   }
 
   // Subscribe the user to a layer
