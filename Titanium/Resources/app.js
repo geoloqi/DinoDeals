@@ -1,6 +1,7 @@
 // import the Geolqoi Module
 var geoloqi = require('ti.geoloqi');
 
+// import the config.js file
 Ti.include('config.js');
 
 geoloqi.init({
@@ -39,6 +40,39 @@ geoloqi.init({
   }
 });
 
+// lines 44-74 deal with handling the dinodeal://open url scheme
+Ti.App.launchURL = '';
+Ti.App.pauseURL = '';
+var cmd = Ti.App.getArguments();
+if ( (typeof(cmd) == 'object') && cmd.hasOwnProperty('url') ) {
+  Ti.App.launchURL = cmd.url;
+}
+ 
+Ti.App.addEventListener( 'pause', function(e) {
+  Ti.App.pauseURL = Ti.App.launchURL;
+});
+
+Ti.App.addEventListener( 'resumed', function(e) {
+  Ti.App.launchURL = '';
+  cmd = Ti.App.getArguments();
+  if ( (typeof(cmd) == 'object') && cmd.hasOwnProperty('url') ) {
+    if ( cmd.url != Ti.App.pauseURL ) {
+      Ti.App.launchURL = cmd.url;
+			action = Ti.App.launchURL.replace("dinodeals://", "").split("?")[0];
+			args = {};
+			Ti.App.launchURL.replace(new RegExp("([^?=&]+)(=([^&]*))?", "g"), function($0, $1, $2, $3) { args[$1] = decodeURIComponent($3); });
+			dealView = Ti.UI.createWindow({
+				url: "ui/windows/browser.js",
+				tabBarHidden: true,
+				openURL: args.url,
+				modal:true,
+				barColor: "#15a6e5"
+			});
+			dealView.open();
+    }
+  }
+});
+
 // create a simple namespace under DinoDeals
 var DinoDeals = {
   Windows: {},
@@ -46,7 +80,7 @@ var DinoDeals = {
 };
 
 (function() {
-  
+ 
   // create a window to hold a webview for recent activity
   DinoDeals.Windows.activity = Ti.UI.createWindow({
     url: "ui/windows/activity.js",

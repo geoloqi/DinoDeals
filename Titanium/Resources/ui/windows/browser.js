@@ -78,8 +78,8 @@ if(Ti.Platform.osname === "iphone"){
 // show activity when loading
 webView.addEventListener('beforeload',function(e){
 	activityIndicator.show();
-  
 }); 
+
 webView.addEventListener('load',function(e){
 	activityIndicator.hide();
   if(webView.canGoForward()){
