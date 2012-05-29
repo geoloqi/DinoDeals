@@ -24,7 +24,9 @@ geoloqi.init({
 	        Titanium.Network.NOTIFICATION_TYPE_ALERT
 	      ],
 	      callback: function(data){
-	        geoloqi.iOS.handlePush(data);
+		      Ti.App.fireEvent("openURL",{url:data.data.geoloqi.link});
+		      //For some reason geoloqi.iOS.handlePush(data); doesn't work.
+	        //geoloqi.iOS.handlePush(data);
 	      },
 	      success:function(data){
 	        geoloqi.iOS.registerDeviceToken(data.deviceToken);
@@ -40,7 +42,22 @@ geoloqi.init({
   }
 });
 
-// lines 44-74 deal with handling the dinodeal://open url scheme
+// Listen for the app event `openURL` and open a new browser window
+Ti.App.addEventListener('openURL', function(e){
+	action = e.url.replace("dinodeals://", "").split("?")[0];
+	args = {};
+	e.url.replace(new RegExp("([^?=&]+)(=([^&]*))?", "g"), function($0, $1, $2, $3) { args[$1] = decodeURIComponent($3); });
+  dealView = Ti.UI.createWindow({
+  	url: "/ui/windows/browser.js",
+  	tabBarHidden: true,
+  	openURL: args.url,
+  	modal:true,
+  	barColor: "#15a6e5"
+  });
+  dealView.open();
+});
+
+// lines 55-79 deal with handling the dinodeal://open url scheme
 Ti.App.launchURL = '';
 Ti.App.pauseURL = '';
 var cmd = Ti.App.getArguments();
@@ -58,17 +75,7 @@ Ti.App.addEventListener( 'resumed', function(e) {
   if ( (typeof(cmd) == 'object') && cmd.hasOwnProperty('url') ) {
     if ( cmd.url != Ti.App.pauseURL ) {
       Ti.App.launchURL = cmd.url;
-			action = Ti.App.launchURL.replace("dinodeals://", "").split("?")[0];
-			args = {};
-			Ti.App.launchURL.replace(new RegExp("([^?=&]+)(=([^&]*))?", "g"), function($0, $1, $2, $3) { args[$1] = decodeURIComponent($3); });
-			dealView = Ti.UI.createWindow({
-				url: "ui/windows/browser.js",
-				tabBarHidden: true,
-				openURL: args.url,
-				modal:true,
-				barColor: "#15a6e5"
-			});
-			dealView.open();
+			Ti.App.fireEvent("openURL", {url: Ti.App.launchURL});
     }
   }
 });
@@ -143,10 +150,6 @@ var DinoDeals = {
     window: DinoDeals.Windows.about
   });
   DinoDeals.tabGroup.addTab(DinoDeals.Tabs.about);
-	
-	Ti.App.addEventListener('openCategories', function(e){
-    DinoDeals.tabGroup.setActiveTab(1);
-	});
 	
   // open the activity tab
   DinoDeals.tabGroup.open();

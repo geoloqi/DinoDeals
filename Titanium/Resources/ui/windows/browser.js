@@ -63,16 +63,18 @@ if(Ti.Platform.osname === "iphone"){
   });
 	
 	toolbar = Titanium.UI.iOS.createToolbar({
-    items:[refresh, flexSpace, back_button, fixSpace, forward_button, flexSpace, safari],
-    bottom:0,
-    borderTop:true,
-    borderBottom:false,
+    items: [refresh, flexSpace, back_button, flexSpace, forward_button, flexSpace, safari],
+    bottom: 0,
+    borderTop: true,
+    borderBottom: false,
     barColor: "#15a6e5"
 	});
 	
 	browserWindow.setRightNavButton(close);
 	browserWindow.add(toolbar);
 	
+} else if(Ti.Platform.osname === "android"){
+	// @TODO impliment android menu for navigating the webview
 }
 
 // show activity when loading

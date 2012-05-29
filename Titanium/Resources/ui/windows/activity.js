@@ -4,24 +4,12 @@ var activityWindow = Ti.UI.currentWindow,
 
 // Create a webview for the deals tab
 var token = (geoloqi.session) ? geoloqi.session.getAccessToken() : null; 
-var url = "../webviews/activity.html#/"+geoloqi.session.getAccessToken();
+var url = "../webviews/activity.html#/"+token;
 var webview = Titanium.UI.createWebView({
 	url: url,
 	backgroundColor:'transparent'
 });
 activityWindow.add(webview);
-
-// Listen for the app event `openURl` and open a new browser window
-Ti.App.addEventListener('openURL', function(e){
-  dealView = Ti.UI.createWindow({
-  	url: "browser.js",
-  	tabBarHidden: true,
-  	openURL: e.url,
-  	modal:true,
-  	barColor: "#15a6e5"
-  });
-  dealView.open();
-});
 
 // Platform specific refresh button
 if(Ti.Platform.osname === "iphone"){

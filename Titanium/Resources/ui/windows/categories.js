@@ -82,6 +82,7 @@ exports = (function(Config){
     xhr.send();
   }
 
+	// callback for the `change` event on switches
 	toggleCallback = function(e){
   	layerid = e.source.row.layerid;
     subscribed = e.value;
@@ -93,6 +94,7 @@ exports = (function(Config){
     }
   }
   
+  // callback for when rows are tapped
   rowCallback = function(e){
   	state = (e.row.children[1].value) ? false : true;
     e.row.children[1].setValue(state);
