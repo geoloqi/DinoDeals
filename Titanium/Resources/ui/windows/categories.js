@@ -169,8 +169,9 @@ exports = (function(Config){
     Ti.API.info("Subscribing to "+ layerid);
     geoloqi.session.postRequest("layer/subscribe/"+layerid, {}, {
       onSuccess: function(data){
-        Ti.API.info(data);
-      },
+				Ti.API.info(data);
+        Ti.API.info(data.headers);
+        Ti.API.info(data.response);      },
       onFailure: function(error){
         Ti.API.error(error);
       }
@@ -183,6 +184,8 @@ exports = (function(Config){
     geoloqi.session.postRequest("layer/unsubscribe/"+layerid, {}, {
       onSuccess: function(data){
         Ti.API.info(data);
+        Ti.API.info(data.headers);
+        Ti.API.info(data.response);
       },
       onFailure: function(error){
         Ti.API.error(error);

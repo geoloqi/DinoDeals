@@ -44,16 +44,28 @@ geoloqi.init({
   }
 });
 
-var dealView;
+var dealOpen = false;
+Ti.App.addEventListener('dealClosed', function(){
+	dealOpen = false;	
+});
+
+var dealView = null;
 // Listen for the app event `openURL` and open a new browser window
 Ti.App.addEventListener('openURL', function(e){
 	args = {};
 	e.url.replace(new RegExp("([^?=&]+)(=([^&]*))?", "g"), function($0, $1, $2, $3) { args[$1] = decodeURIComponent($3); });
-	
-	if(dealView){
-		dealView.close();
-	}
-	if(args.url){
+	alert(dealView +" "+ dealOpen);
+	// deal view already exists and is the current window
+	if(dealView && dealOpen){
+		Ti.App.fireEvent("updateURL", {url:args.url});
+	// deal view already exists but was closed
+	}else if(dealView && !dealOpen){
+		dealView.open();
+		setTimeout(function(){
+			Ti.App.fireEvent("updateURL", {url:args.url});
+		}, 100);
+	//first time opening a deal
+	} else {
 		dealView = Ti.UI.createWindow({
 			url: "/ui/windows/browser.js",
 			tabBarHidden: true,
@@ -63,6 +75,7 @@ Ti.App.addEventListener('openURL', function(e){
 		});
 		dealView.open();
 	}
+	dealOpen = true;
 });
 
 // lines 60-80 deal with handling the dinodeal://open url scheme

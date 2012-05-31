@@ -4,16 +4,15 @@ webView = Ti.UI.createWebView({
 	url: browserWindow.openURL
 });
 
-activityIndicator = Ti.UI.createActivityIndicator({ style: Titanium.UI.iPhone.ActivityIndicatorStyle.DARK }),
-
 browserWindow.add(webView);
 
-Ti.App.addEventListener('setUrl', function(e){
+Ti.App.addEventListener('updateURL', function(e){
 	webView.setUrl(e.url);
 });
 
 if(Ti.Platform.osname === "iphone"){
-	
+	activityIndicator = Ti.UI.createActivityIndicator({ style: Titanium.UI.iPhone.ActivityIndicatorStyle.DARK }),
+
 	refresh = Ti.UI.createButton({
 		systemButton: Titanium.UI.iPhone.SystemButton.REFRESH
 	});
@@ -46,6 +45,7 @@ if(Ti.Platform.osname === "iphone"){
 	
 	close.addEventListener("click", function(){
 		browserWindow.close();
+		Ti.App.fireEvent("dealClosed");
 	});
 	
 	back_button = Ti.UI.createButton({
@@ -77,26 +77,26 @@ if(Ti.Platform.osname === "iphone"){
 	browserWindow.setRightNavButton(close);
 	browserWindow.add(toolbar);
 	
+	// show activity when loading
+	webView.addEventListener('beforeload',function(e){
+		activityIndicator.show();
+	}); 
+	
+	webView.addEventListener('load',function(e){
+		activityIndicator.hide();
+	  if(webView.canGoForward()){
+	  	forward_button.enabled = true;
+	  } else {            
+	  	forward_button.enabled = false;
+	  }
+	  if(webView.canGoBack()){
+	  	back_button.enabled = true;
+	  } else {            
+			back_button.enabled = false;
+	  }
+	  current_url = e.url;
+	});
+	
 } else if(Ti.Platform.osname === "android"){
 	// @TODO impliment android menu for navigating the webview
 }
-
-// show activity when loading
-webView.addEventListener('beforeload',function(e){
-	activityIndicator.show();
-}); 
-
-webView.addEventListener('load',function(e){
-	activityIndicator.hide();
-  if(webView.canGoForward()){
-  	forward_button.enabled = true;
-  } else {            
-  	forward_button.enabled = false;
-  }
-  if(webView.canGoBack()){
-  	back_button.enabled = true;
-  } else {            
-		back_button.enabled = false;
-  }
-  current_url = e.url;
-});
