@@ -32,57 +32,63 @@ function openDeal(e){
 }
 
 function updateView(data){
-	
 	hideLoadIndicator();
 	messages = (typeof data.items === "string") ? JSON.parse(data.items) : data.items;
 	rows = [];
-  for(var i=0; i < messages.length; i++) {
-		message = messages[i];
-		if(message){
-			
-			var row = Ti.UI.createTableViewRow({
-				hasDetail: true,
-				height: 'auto',
-				layout: 'vertical',
-				dealUrl: message.object.sourceURL
-			});
-	
-	    var label = Ti.UI.createLabel({
-	      top: 10,
-	      left: 10,
-	      text: message.object.summary,
-	      textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
-	      color: "#444"
-	    });
-	    
-	    var time = Ti.UI.createLabel({
-	      bottom: 10,
-	      left:10,
-	      font: {fontSize: 12},
-	      text: message.displayDate,
-	      textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
-	      color: "#666"
-	    });
-	        
-	    if (Ti.Platform.osname === "android") {
-				// Override the label color on Android
-				label.setColor("#222222");
-	    }
-	    
-			row.add(label);
-			row.add(time);
-	    rows.push(row);
+	Ti.API.info(messages.length);
+	Ti.API.info(messages);
+	if(messages.length) {
+		hideNoMessages();
+	  for(var i=0; i < messages.length; i++) {
+			message = messages[i];
+			if(message){
+				
+				var row = Ti.UI.createTableViewRow({
+					hasDetail: true,
+					height: 'auto',
+					layout: 'vertical',
+					dealUrl: message.object.sourceURL
+				});
+		
+		    var label = Ti.UI.createLabel({
+		      top: 10,
+		      left: 10,
+		      text: message.object.summary,
+		      textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+		      color: "#444"
+		    });
+		    
+		    var time = Ti.UI.createLabel({
+		      bottom: 10,
+		      left:10,
+		      font: {fontSize: 12},
+		      text: message.displayDate,
+		      textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+		      color: "#666"
+		    });
+		        
+		    if (Ti.Platform.osname === "android") {
+					// Override the label color on Android
+					label.setColor("#222222");
+		    }
+		    
+				row.add(label);
+				row.add(time);
+		    rows.push(row);
+		  }
 	  }
-  }
-  
-	if(!tableView && rows.length){
-		Ti.API.info("create table view");
-		createTableView({data:rows});
-	} else if(rows.length){
-		Ti.API.info("update view");
-		tableView.setData(rows);
+	  
+		if(!tableView && rows.length){
+			Ti.API.info("create table view");
+			createTableView({data:rows});
+		} else if(rows.length){
+			Ti.API.info("update view");
+			tableView.setData(rows);
+		} else {
+			Ti.API.info("what the hell");
+		}
 	} else {
-		Ti.API.info("what the hell");
+		showNoMessages();
 	}
 }
 
@@ -109,7 +115,9 @@ function cacheDeals(data){
 }
 
 function hideNoMessages(){
-	activityWindow.remove(noMessagesView);
+	if(noMessagesView){
+		activityWindow.remove(noMessagesView);
+	}
 }
 
 function showNoMessages(){
@@ -137,9 +145,7 @@ function showNoMessages(){
 	}
 }
 
-activityWindow.add(activityIndicator);
-
-Ti.App.addEventListener("geoloqiReady", function(e){
+function init(){
 	if(Ti.App.Properties.hasProperty("messageHistory")){
 		Ti.API.info("found cached messages");
 		updateView(JSON.parse(Ti.App.Properties.getString("messageHistory")));
@@ -153,7 +159,19 @@ Ti.App.addEventListener("geoloqiReady", function(e){
 		showNoMessages();
 		// display default message
 	}
-});
+}
+
+activityWindow.add(activityIndicator);
+
+Ti.API.info("Listen");
+
+if(geoloqi.session.getAccessToken()){
+	init();
+} else {
+	Ti.App.addEventListener("geoloqi:ready", function(e){
+		init();
+	});
+}
 
 Ti.App.addEventListener("refreshDeals", function(e){
 	loadDeals();

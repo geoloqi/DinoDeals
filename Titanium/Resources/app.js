@@ -17,8 +17,8 @@ geoloqi.init({
     Ti.API.info("User ID: " + geoloqi.session.getUserId());
     Ti.API.info("Username: " + geoloqi.session.getUsername());
     Ti.API.info("Anonymous User?: " + geoloqi.session.isAnonymous());
-    
-    Ti.fireEvent("geoloqiReady");
+    Ti.API.info("Fire");
+    Ti.App.fireEvent("geoloqi:ready");
     
     if (Ti.Platform.osname !== "android") {
 	    Ti.Network.registerForPushNotifications({
@@ -53,16 +53,16 @@ Ti.App.addEventListener('openURL', function(e){
 	if(dealView){
 		dealView.close();
 	}
-	
-	dealView = Ti.UI.createWindow({
-		url: "/ui/windows/browser.js",
-		tabBarHidden: true,
-		openURL: args.url,
-		modal:true,
-		barColor: "#15a6e5"
-	});
-	dealView.open();
-	
+	if(args.url){
+		dealView = Ti.UI.createWindow({
+			url: "/ui/windows/browser.js",
+			tabBarHidden: true,
+			openURL: args.url,
+			modal:true,
+			barColor: "#15a6e5"
+		});
+		dealView.open();
+	}
 });
 
 // lines 60-80 deal with handling the dinodeal://open url scheme
