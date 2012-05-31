@@ -6,9 +6,13 @@ exports = (function(Config){
   //header = Ti.UI.createTableViewSection({headerTitle:"Available Deals"}),
   rows = [],
   tableView = null,
+  addTableView = true,
   categoriesWindow = Ti.UI.currentWindow,
   refreshButton = Ti.UI.createButton({ systemButton: Ti.UI.iPhone.SystemButton.REFRESH }),
-  activityIndicator = Ti.UI.createActivityIndicator({ style: Titanium.UI.iPhone.ActivityIndicatorStyle.DARK }),
+  activityIndicator = Ti.UI.createActivityIndicator({ 
+  	style: Titanium.UI.iPhone.ActivityIndicatorStyle.DARK,
+  	message: (Ti.Platform.osname === "android") ? "Loading Categories" : null
+  }),
   geoloqi = categoriesWindow.geoloqi;
   
   // Configure xhr object to talk to DinoDeals server
@@ -33,45 +37,45 @@ exports = (function(Config){
       refreshCategories();
     });
   } else {
-	var OPT_ENABLE = 1, OPT_DISABLE = 2;
-	var categories = categoriesWindow.activity;
-
-	categories.onCreateOptionsMenu = function(e){
-		var menu, menuItem;
-
-		menu = e.menu;
-
-		// Refresh		
-		menuItem = menu.add({ title: "Refresh" });
-		menuItem.addEventListener("click", function(e) {
-			webview.evalJS("window.location.reload();");
-		});
-		
-		// Disable location
-		menuItem = menu.add({ title: "Disable Location", itemId: OPT_DISABLE });
-		menuItem.addEventListener("click", function(e) {
-			geoloqi.tracker.setProfile("OFF");
-		});
-				
-		// Enable location
-		menuItem = menu.add({ title: "Enable Location", itemId: OPT_ENABLE });
-		menuItem.addEventListener("click", function(e) {
-			geoloqi.tracker.setProfile("PASSIVE");
-		});
-	};
+		var OPT_ENABLE = 1, OPT_DISABLE = 2;
+		var categories = categoriesWindow.activity;
 	
-	categories.onPrepareOptionsMenu = function(e) {
-		var menu = e.menu;
+		categories.onCreateOptionsMenu = function(e){
+			var menu, menuItem;
+	
+			menu = e.menu;
+	
+			// Refresh		
+			menuItem = menu.add({ title: "Refresh" });
+			menuItem.addEventListener("click", function(e) {
+				refreshCategories();
+			});
+			
+			// Disable location
+			menuItem = menu.add({ title: "Disable Location", itemId: OPT_DISABLE });
+			menuItem.addEventListener("click", function(e) {
+				geoloqi.tracker.setProfile("OFF");
+			});
+					
+			// Enable location
+			menuItem = menu.add({ title: "Enable Location", itemId: OPT_ENABLE });
+			menuItem.addEventListener("click", function(e) {
+				geoloqi.tracker.setProfile("PASSIVE");
+			});
+		};
 		
-		// Toggle the correct menu item visibility
-		if (geoloqi.tracker.getProfile() === "OFF") {
-			menu.findItem(OPT_DISABLE).setVisible(false);
-			menu.findItem(OPT_ENABLE).setVisible(true);
-		} else {
-			menu.findItem(OPT_DISABLE).setVisible(true);
-			menu.findItem(OPT_ENABLE).setVisible(false);	
-		}
-	};
+		categories.onPrepareOptionsMenu = function(e) {
+			var menu = e.menu;
+			
+			// Toggle the correct menu item visibility
+			if (geoloqi.tracker.getProfile() === "OFF") {
+				menu.findItem(OPT_DISABLE).setVisible(false);
+				menu.findItem(OPT_ENABLE).setVisible(true);
+			} else {
+				menu.findItem(OPT_DISABLE).setVisible(true);
+				menu.findItem(OPT_ENABLE).setVisible(false);	
+			}
+		};
   }
 
   // Update the list of categories from the server
@@ -108,12 +112,15 @@ exports = (function(Config){
         category = categories[i];
         
         var row = Ti.UI.createTableViewRow({
-          height:"50dp",
+          height:'auto',
           layerid: category.id
         });
         
         var label = Ti.UI.createLabel({
           left: "10dp",
+          top:10,
+          bottom:10,
+          height:'auto',
           text: category.name,
           touchEnabled: false
         });
@@ -136,9 +143,12 @@ exports = (function(Config){
         rows.push(row);
       }
     }
+    
     tableView.setData(rows);
-    if(!tableView.added){
+    
+    if(addTableView){
     	categoriesWindow.add(tableView);
+    	addTableView = false;
     }
   }
 
@@ -146,10 +156,12 @@ exports = (function(Config){
   function createTableView(){
     Ti.API.info("Creating Table View");
     tableView = Ti.UI.createTableView({
-      data:rows,
-      added: false
+      data:rows
     });
-    tableView.addEventListener("click", rowCallback);
+    
+    if(Ti.Platform.osname === "iphone"){
+    	tableView.addEventListener("click", rowCallback);
+    }
   }
 
   // Subscribe the user to a layer

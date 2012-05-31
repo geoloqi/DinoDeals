@@ -2,14 +2,162 @@ var activityWindow = Ti.UI.currentWindow,
 		Config = activityWindow.Config,
 		geoloqi = activityWindow.geoloqi;
 
-// Create a webview for the deals tab
-var token = (geoloqi.session) ? geoloqi.session.getAccessToken() : null; 
-var url = "../webviews/activity.html#/"+token;
-var webview = Titanium.UI.createWebView({
-	url: url,
-	backgroundColor:'transparent'
+var tableView,
+		noMessagesView;
+		rows = [],
+		activityIndicator = Ti.UI.createActivityIndicator({ 
+	  	style: Titanium.UI.iPhone.ActivityIndicatorStyle.DARK,
+	  	message: (Ti.Platform.osname === "android") ? "Loading Categories" : null
+	  });
+
+function loadDeals() {
+	Ti.API.info("loading new deals");
+	geoloqi.session.getRequest("timeline/messages", {
+		limit: "30"
+	} , {
+		onSuccess: function(data){
+			Ti.API.info("timelime/messages Success");
+			Ti.API.info(typeof data.response);
+			cacheDeals(data.response);
+			updateView(data.response);
+		},
+		onFailure: function(error){
+			Ti.API.error(error);
+		}
+	});
+}
+
+function openDeal(e){
+	Ti.API.info(e);
+}
+
+function updateView(data){
+	
+	hideLoadIndicator();
+	messages = (typeof data.items === "string") ? JSON.parse(data.items) : data.items;
+	rows = [];
+  for(var i=0; i < messages.length; i++) {
+		message = messages[i];
+		if(message){
+			
+			var row = Ti.UI.createTableViewRow({
+				hasDetail: true,
+				height: 'auto',
+				layout: 'vertical',
+				dealUrl: message.object.sourceURL
+			});
+	
+	    var label = Ti.UI.createLabel({
+	      top: 10,
+	      left: 10,
+	      text: message.object.summary,
+	      textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+	      color: "#444"
+	    });
+	    
+	    var time = Ti.UI.createLabel({
+	      bottom: 10,
+	      left:10,
+	      font: {fontSize: 12},
+	      text: message.displayDate,
+	      textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+	      color: "#666"
+	    });
+	        
+	    if (Ti.Platform.osname === "android") {
+				// Override the label color on Android
+				label.setColor("#222222");
+	    }
+	    
+			row.add(label);
+			row.add(time);
+	    rows.push(row);
+	  }
+  }
+  
+	if(!tableView && rows.length){
+		Ti.API.info("create table view");
+		createTableView({data:rows});
+	} else if(rows.length){
+		Ti.API.info("update view");
+		tableView.setData(rows);
+	} else {
+		Ti.API.info("what the hell");
+	}
+}
+
+function createTableView(rows){
+	tableView = Ti.UI.createTableView(rows);
+	
+	tableView.addEventListener("click", function(e){
+		Ti.App.fireEvent("openURL", {url: e.rowData.dealUrl })
+	});
+	
+	activityWindow.add(tableView);
+}
+
+function showLoadIndicator(){
+  activityIndicator.show();
+}
+
+function hideLoadIndicator(){
+	activityIndicator.hide();
+}
+
+function cacheDeals(data){
+	Ti.App.Properties.setString("messageHistory", JSON.stringify(data));
+}
+
+function hideNoMessages(){
+	activityWindow.remove(noMessagesView);
+}
+
+function showNoMessages(){
+	if(!noMessagesView){
+		noMessagesView = Ti.UI.createView({
+			top:20,
+			left:40,
+			right:40,
+			layout: "vertical"
+		});
+		noMessagesView.add(Ti.UI.createLabel({
+			text:"You haven't picked up any deals yet. When you get near a deal we'll send you a notification.",
+			font: {fontSize:24},
+			textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
+			color:"#444"
+		}));
+		noMessagesView.add(Ti.UI.createLabel({
+			text:"Try subscribing to more categories.",
+			font: {fontSize:32, fontWeight: "bold"},
+			color: "#137fae",
+			textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER
+		}));
+		hideLoadIndicator();
+		activityWindow.add(noMessagesView);
+	}
+}
+
+activityWindow.add(activityIndicator);
+
+Ti.App.addEventListener("geoloqiReady", function(e){
+	if(Ti.App.Properties.hasProperty("messageHistory")){
+		Ti.API.info("found cached messages");
+		updateView(JSON.parse(Ti.App.Properties.getString("messageHistory")));
+		loadDeals();
+	} else if (geoloqi.session.getAccessToken()){
+		Ti.API.info("no cached messages, getting new messages");
+		showLoadIndicator();
+		loadDeals();
+	} else {
+		Ti.API.info("no session found");
+		showNoMessages();
+		// display default message
+	}
 });
-activityWindow.add(webview);
+
+Ti.App.addEventListener("refreshDeals", function(e){
+	loadDeals();
+});
 
 // Platform specific refresh button
 if(Ti.Platform.osname === "iphone"){
@@ -18,7 +166,7 @@ if(Ti.Platform.osname === "iphone"){
 	});
 
 	refresh.addEventListener("click", function(e){
-		webview.evalJS("window.location.reload();");
+		loadDeals();
 	});
 	
 	activityWindow.setRightNavButton(refresh);
@@ -31,10 +179,10 @@ if(Ti.Platform.osname === "iphone"){
 
 		menu = e.menu;
 
-		// Refresh		
+		// Refresh
 		menuItem = menu.add({ title: "Refresh" });
 		menuItem.addEventListener("click", function(e) {
-			webview.evalJS("window.location.reload();");
+			loadDeals();
 		});
 		
 		// Disable location
@@ -50,7 +198,6 @@ if(Ti.Platform.osname === "iphone"){
 		});
 	};
 	
-		
 	activity.onPrepareOptionsMenu = function(e) {
 		var menu = e.menu;
 		

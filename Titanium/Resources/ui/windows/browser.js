@@ -8,6 +8,10 @@ activityIndicator = Ti.UI.createActivityIndicator({ style: Titanium.UI.iPhone.Ac
 
 browserWindow.add(webView);
 
+Ti.App.addEventListener('setUrl', function(e){
+	webView.setUrl(e.url);
+});
+
 if(Ti.Platform.osname === "iphone"){
 	
 	refresh = Ti.UI.createButton({

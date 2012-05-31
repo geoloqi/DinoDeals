@@ -7,7 +7,7 @@ Ti.include('config.js');
 geoloqi.init({
   clientId: Config.clientId,
   clientSecret: Config.clientSecret,
-  pushAccount: Config.pushAccount,
+  pushAccount: "geoloqi@gmail.com",
   pushIcon: "push_icon",
   trackingProfile: "PASSIVE"
 },{
@@ -18,6 +18,8 @@ geoloqi.init({
     Ti.API.info("Username: " + geoloqi.session.getUsername());
     Ti.API.info("Anonymous User?: " + geoloqi.session.isAnonymous());
     
+    Ti.fireEvent("geoloqiReady");
+    
     if (Ti.Platform.osname !== "android") {
 	    Ti.Network.registerForPushNotifications({
 	      types:[
@@ -25,8 +27,8 @@ geoloqi.init({
 	      ],
 	      callback: function(data){
 		      Ti.App.fireEvent("openURL",{url:data.data.geoloqi.link});
-		      //For some reason geoloqi.iOS.handlePush(data); doesn't work.
-	        //geoloqi.iOS.handlePush(data);
+		      Ti.App.fireEvent("refreshDeals");
+	        geoloqi.iOS.handlePush(data);
 	      },
 	      success:function(data){
 	        geoloqi.iOS.registerDeviceToken(data.deviceToken);
@@ -42,43 +44,51 @@ geoloqi.init({
   }
 });
 
+var dealView;
 // Listen for the app event `openURL` and open a new browser window
 Ti.App.addEventListener('openURL', function(e){
-	action = e.url.replace("dinodeals://", "").split("?")[0];
 	args = {};
 	e.url.replace(new RegExp("([^?=&]+)(=([^&]*))?", "g"), function($0, $1, $2, $3) { args[$1] = decodeURIComponent($3); });
-  dealView = Ti.UI.createWindow({
-  	url: "/ui/windows/browser.js",
-  	tabBarHidden: true,
-  	openURL: args.url,
-  	modal:true,
-  	barColor: "#15a6e5"
-  });
-  dealView.open();
+	
+	if(dealView){
+		dealView.close();
+	}
+	
+	dealView = Ti.UI.createWindow({
+		url: "/ui/windows/browser.js",
+		tabBarHidden: true,
+		openURL: args.url,
+		modal:true,
+		barColor: "#15a6e5"
+	});
+	dealView.open();
+	
 });
 
-// lines 55-79 deal with handling the dinodeal://open url scheme
-Ti.App.launchURL = '';
-Ti.App.pauseURL = '';
-var cmd = Ti.App.getArguments();
-if ( (typeof(cmd) == 'object') && cmd.hasOwnProperty('url') ) {
-  Ti.App.launchURL = cmd.url;
+// lines 60-80 deal with handling the dinodeal://open url scheme
+if(Ti.Platform.osname === "iphone"){
+	Ti.App.launchURL = '';
+	Ti.App.pauseURL = '';
+	var cmd = Ti.App.getArguments();
+	if ( (typeof(cmd) == 'object') && cmd.hasOwnProperty('url') ) {
+	  Ti.App.launchURL = cmd.url;
+	}
+	 
+	Ti.App.addEventListener( 'pause', function(e) {
+	  Ti.App.pauseURL = Ti.App.launchURL;
+	});
+	
+	Ti.App.addEventListener( 'resumed', function(e) {
+	  Ti.App.launchURL = '';
+	  cmd = Ti.App.getArguments();
+	  if ( (typeof(cmd) == 'object') && cmd.hasOwnProperty('url') ) {
+	    if ( cmd.url != Ti.App.pauseURL ) {
+	      Ti.App.launchURL = cmd.url;
+				Ti.App.fireEvent("openURL", {url: Ti.App.launchURL});
+	    }
+	  }
+	});
 }
- 
-Ti.App.addEventListener( 'pause', function(e) {
-  Ti.App.pauseURL = Ti.App.launchURL;
-});
-
-Ti.App.addEventListener( 'resumed', function(e) {
-  Ti.App.launchURL = '';
-  cmd = Ti.App.getArguments();
-  if ( (typeof(cmd) == 'object') && cmd.hasOwnProperty('url') ) {
-    if ( cmd.url != Ti.App.pauseURL ) {
-      Ti.App.launchURL = cmd.url;
-			Ti.App.fireEvent("openURL", {url: Ti.App.launchURL});
-    }
-  }
-});
 
 // create a simple namespace under DinoDeals
 var DinoDeals = {
