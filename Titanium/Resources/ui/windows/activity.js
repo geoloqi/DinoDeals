@@ -17,12 +17,17 @@ function loadDeals() {
 	} , {
 		onSuccess: function(data){
 			Ti.API.info("timelime/messages Success");
-			Ti.API.info(typeof data.response);
+			Ti.API.info(data);
 			cacheDeals(data.response);
 			updateView(data.response);
 		},
+		onComplete: function(data){
+			Ti.API.info("timelime/messages Complete");
+			Ti.API.info(data);
+		},
 		onFailure: function(error){
-			Ti.API.error(error);
+			Ti.API.info("timelime/messages Error");
+			Ti.API.info(error);
 		}
 	});
 }
@@ -103,11 +108,15 @@ function createTableView(rows){
 }
 
 function showLoadIndicator(){
-  activityIndicator.show();
+	if(Ti.Platform.osname === "iphone"){
+  	activityIndicator.show();
+	}
 }
 
 function hideLoadIndicator(){
-	activityIndicator.hide();
+	if(Ti.Platform.osname === "iphone"){
+		activityIndicator.hide();
+	}
 }
 
 function cacheDeals(data){
@@ -146,6 +155,7 @@ function showNoMessages(){
 }
 
 function init(){
+	Ti.App.Properties.removeProperty("messageHistory");
 	if(Ti.App.Properties.hasProperty("messageHistory")){
 		Ti.API.info("found cached messages");
 		updateView(JSON.parse(Ti.App.Properties.getString("messageHistory")));
@@ -157,7 +167,6 @@ function init(){
 	} else {
 		Ti.API.info("no session found");
 		showNoMessages();
-		// display default message
 	}
 }
 

@@ -1,16 +1,29 @@
 require File.join(File.dirname(__FILE__), 'env')
 
-namespace :bootstrap do
+namespace :categories do
 	desc "Create the initial categories to sort deals into"
-	task :categories do
+	task :create do
 
 		# Create a new geoloqi session as the application
 		geoloqi = Geoloqi::Session.new :access_token => CONFIG['geoloqi']['app_access_token']
 
 		# For each category in our env.rb create a geoloqi layer to store deals for that category
 		CATEGORIES.each do |k,v|
-		  puts "creating layer category for #{k}..."
-		  geoloqi.post 'layer/create', {:name => k, :key => v, :public => 1}
+		  puts "\n\ncreating layer category for #{k}..."
+		  puts geoloqi.post 'layer/create', {:name => k, :key => v, :public => 1}
+		end
+
+	end
+
+	desc "Create the initial categories to sort deals into"
+	task :delete do
+
+		# Create a new geoloqi session as the application
+		geoloqi = Geoloqi::Session.new :access_token => CONFIG['geoloqi']['app_access_token']
+
+		geoloqi.get('layer/list')[:layers].each do |layer|
+			puts "\n\ndeleting layer - #{layer[:name]}"
+			puts geoloqi.post("layer/delete/#{layer[:layer_id]}")
 		end
 
 	end
