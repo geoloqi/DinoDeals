@@ -99,6 +99,7 @@ namespace :import do
 			                         :latitude => offer[:locations][0][:latitude],
 			                         :longitude => offer[:locations][0][:longitude],
 			                         :radius => DEAL_PLACE_RADIUS,
+			                         :date_to => offer[:expires_at],
 			                         :place_key => offer[:id],
 			                         :place_layer_id => layer[:layer_id],
 			                         :place_name => offer[:locations][0][:name] }
