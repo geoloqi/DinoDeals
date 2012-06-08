@@ -30,6 +30,37 @@ namespace :categories do
 end
 
 namespace :deals do
+
+	desc "Remove all existing deals from all categories"
+	task :clean do
+
+		# Create a new geoloqi session as the application
+		geoloqi = Geoloqi::Session.new :access_token => CONFIG['geoloqi']['app_access_token']
+
+		geoloqi.get('layer/list')[:layers].each do |layer|
+			puts "Processing layer #{layer[:layer_id]}: #{layer[:name]}"
+
+			geoloqi.get('place/list', :layer_id => layer[:layer_id])[:places].each do |place|
+				puts "\tPlace: #{place[:name]}"
+
+				geoloqi.get('trigger/list', :place_id => place[:place_id])[:triggers].each do |trigger|
+					puts "\t\tTrigger: #{trigger[:trigger_id]} #{trigger[:key]}"
+					puts "\t\t\t#{trigger[:text]}"
+
+					# puts geoloqi.post("trigger/delete/#{trigger[:trigger_id]}", {})
+					puts geoloqi.post("trigger/update/#{trigger[:trigger_id]}", {
+						date_to: DateTime.now.iso8601
+					})
+					puts "\n"
+				end
+
+				# puts geoloqi.post("place/delete/#{place[:place_id]}", {})
+
+			end
+		end
+
+	end
+
 	desc "Import deals from Sqoot"
 	task :import do
 
@@ -102,7 +133,8 @@ namespace :deals do
 			                         :longitude => offer[:locations][0][:longitude],
 			                         :radius => DEAL_PLACE_RADIUS,
 			                         :date_to => offer[:expires_at],
-			                         :place_key => offer[:id],
+			                         :one_time => 1,
+			                         :place_key => Digest::SHA2.hexdigest(offer[:locations][0].to_json),
 			                         :place_layer_id => layer[:layer_id],
 			                         :place_name => offer[:locations][0][:name] }
 			        puts "\n\ncreating - #{text}"
