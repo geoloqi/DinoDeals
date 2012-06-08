@@ -12,8 +12,8 @@ var tableView,
 
 function loadDeals() {
 	Ti.API.info("loading new deals");
-	geoloqi.session.getRequest("timeline/messages", {
-		limit: "30"
+	geoloqi.session.getRequest("trigger/history", {
+		limit: "15"
 	} , {
 		onSuccess: function(data){
 			Ti.API.info("timelime/messages Success");
@@ -38,27 +38,33 @@ function openDeal(e){
 
 function updateView(data){
 	hideLoadIndicator();
-	messages = (typeof data.items === "string") ? JSON.parse(data.items) : data.items;
+	history = (typeof data.items === "string") ? JSON.parse(data.history) : data.history;
 	rows = [];
-	Ti.API.info(messages.length);
-	Ti.API.info(messages);
-	if(messages.length) {
+	Ti.API.info(history.length);
+	Ti.API.info(history);
+	if(history.length) {
 		hideNoMessages();
-	  for(var i=0; i < messages.length; i++) {
-			message = messages[i];
-			if(message){
+	  for(var i=0; i < history.length; i++) {
+	  	item = history[i];
+			trigger = item.trigger;
+			if(item){
 				
 				var row = Ti.UI.createTableViewRow({
 					hasDetail: true,
 					height: 'auto',
 					layout: 'vertical',
-					dealUrl: message.object.sourceURL
+					dealUrl: trigger.url
 				});
-		
+				
+				Ti.API.info(trigger);
+				Ti.API.info(trigger.text)
+				Ti.API.info(trigger.extra.deal_text)
+				Ti.API.info((typeof trigger.extra.deal_text !== "undefined") ? trigger.extra.deal_text : trigger.text)
+		    
 		    var label = Ti.UI.createLabel({
 		      top: 10,
 		      left: 10,
-		      text: message.object.summary,
+		      text: (typeof trigger.extra.deal_text !== "undefined") ? trigger.extra.deal_text : trigger.text,
 		      textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 		      color: "#444"
 		    });
@@ -67,7 +73,7 @@ function updateView(data){
 		      bottom: 10,
 		      left:10,
 		      font: {fontSize: 12},
-		      text: message.displayDate,
+		      text: item.display_date,
 		      textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 		      color: "#666"
 		    });

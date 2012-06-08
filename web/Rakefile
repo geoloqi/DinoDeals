@@ -164,7 +164,11 @@ namespace :deals do
 			                         :one_time => 1,
 			                         :place_key => Digest::SHA2.hexdigest(offer[:locations][0].to_json),
 			                         :place_layer_id => layer[:layer_id],
-			                         :place_name => offer[:locations][0][:name] }
+			                         :place_name => offer[:locations][0][:name],
+			                         :extra => {
+			                           :deal_text => text
+			                         	}
+			                        }
 			        puts "\n\ncreating - #{text}"
 			        puts geoloqi.post 'trigger/create', trigger_data
 			      rescue Geoloqi::ApiError => gae
