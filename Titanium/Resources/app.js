@@ -54,7 +54,6 @@ var dealView = null;
 Ti.App.addEventListener('openURL', function(e){
 	args = {};
 	e.url.replace(new RegExp("([^?=&]+)(=([^&]*))?", "g"), function($0, $1, $2, $3) { args[$1] = decodeURIComponent($3); });
-	alert(dealView +" "+ dealOpen);
 	// deal view already exists and is the current window
 	if(dealView && dealOpen){
 		Ti.App.fireEvent("updateURL", {url:args.url});
