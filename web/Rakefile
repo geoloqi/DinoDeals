@@ -127,7 +127,7 @@ namespace :deals do
 			        end_string = (offer[:locations][0][:name]) ? "at #{offer[:locations][0][:name]}." : "." 
   						trigger_data = { :key => offer[:id],
 			                         :type => 'message',
-			                         :text => base_string + end_string,
+			                         :text => "#{base_string} #{end_string}",
 			                         :url => "dinodeals://open?url=#{Rack::Utils.escape(offer[:url])}",
 			                         :latitude => offer[:locations][0][:latitude],
 			                         :longitude => offer[:locations][0][:longitude],
