@@ -92,15 +92,16 @@ namespace :deals do
 			    	# In this case `dinodeals://` is defined by the DinoDeals app.
 			      begin
 			        text = (!offer[:short_title].nil? && offer[:short_title].length > 0) ? offer[:short_title] : offer[:title]
+			        base_string = "You found a new deal"
+			        end_string = (offer[:locations][0][:name]) ? "at #{offer[:locations][0][:name]}." : "." 
   						trigger_data = { :key => offer[:id],
 			                         :type => 'message',
-			                         :text => "You found a new deal at #{offer[:locations][0][:name]}",
+			                         :text => base_string + end_string,
 			                         :url => "dinodeals://open?url=#{Rack::Utils.escape(offer[:url])}",
 			                         :latitude => offer[:locations][0][:latitude],
 			                         :longitude => offer[:locations][0][:longitude],
 			                         :radius => DEAL_PLACE_RADIUS,
 			                         :date_to => offer[:expires_at],
-			                         :one_time => 1,
 			                         :place_key => offer[:id],
 			                         :place_layer_id => layer[:layer_id],
 			                         :place_name => offer[:locations][0][:name] }
