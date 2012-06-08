@@ -50,6 +50,11 @@ Ti.App.addEventListener('dealClosed', function(){
 });
 
 var dealView = null;
+
+Ti.App.addEventListener('openSafari', function(e){
+	Ti.Platform.openURL(e.url);
+});
+
 // Listen for the app event `openURL` and open a new browser window
 Ti.App.addEventListener('openURL', function(e){
 	args = {};

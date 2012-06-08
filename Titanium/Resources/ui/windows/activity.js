@@ -133,19 +133,23 @@ function showNoMessages(){
 	if(!noMessagesView){
 		noMessagesView = Ti.UI.createView({
 			top:20,
-			left:40,
-			right:40,
+			left:10,
+			right:10,
 			layout: "vertical"
 		});
 		noMessagesView.add(Ti.UI.createLabel({
 			text:"You haven't picked up any deals yet. When you get near a deal we'll send you a notification.",
-			font: {fontSize:24},
+			font: {fontSize: (Ti.Platform.osname == "iphone") ? 18: 24 },
 			textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
 			color:"#444"
 		}));
 		noMessagesView.add(Ti.UI.createLabel({
 			text:"Try subscribing to more categories.",
-			font: {fontSize:32, fontWeight: "bold"},
+			top:10,
+			font: {
+				fontSize: (Ti.Platform.osname == "iphone") ? 18: 24,
+				fontWeight: "bold"
+			},
 			color: "#137fae",
 			textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER
 		}));
@@ -173,8 +177,9 @@ function init(){
 activityWindow.add(activityIndicator);
 
 Ti.API.info("Listen");
-
-if(geoloqi.session.getAccessToken()){
+Ti.API.info(typeof geoloqi.session);
+Ti.API.info(typeof geoloqi.session.getAccessToken());
+if(typeof geoloqi.session !== "undefined"){
 	init();
 } else {
 	Ti.App.addEventListener("geoloqi:ready", function(e){
