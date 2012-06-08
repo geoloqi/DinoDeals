@@ -152,10 +152,10 @@ namespace :deals do
 			      begin
 			        text = (!offer[:short_title].nil? && offer[:short_title].length > 0) ? offer[:short_title] : offer[:title]
 			        base_string = "You found a new deal"
-			        end_string = (offer[:locations][0][:name]) ? "at #{offer[:locations][0][:name]}." : "." 
+			        end_string = (offer[:locations][0][:name]) ? " at #{offer[:locations][0][:name]}".strip : "" 
   						trigger_data = { :key => offer[:id],
 			                         :type => 'message',
-			                         :text => "#{base_string} #{end_string}",
+			                         :text => "#{base_string}#{end_string}",
 			                         :url => "dinodeals://open?url=#{Rack::Utils.escape(offer[:url])}",
 			                         :latitude => offer[:locations][0][:latitude],
 			                         :longitude => offer[:locations][0][:longitude],
@@ -164,7 +164,7 @@ namespace :deals do
 			                         :one_time => 1,
 			                         :place_key => Digest::SHA2.hexdigest(offer[:locations][0].to_json),
 			                         :place_layer_id => layer[:layer_id],
-			                         :place_name => offer[:locations][0][:name],
+			                         :place_name => offer[:locations][0][:name].strip,
 			                         :extra => {
 			                           :deal_text => text
 			                         	}
