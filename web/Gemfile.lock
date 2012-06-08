@@ -48,6 +48,7 @@ PLATFORMS
 
 DEPENDENCIES
   geoloqi
+  json
   pry
   pry-nav
   puma (> 1)
