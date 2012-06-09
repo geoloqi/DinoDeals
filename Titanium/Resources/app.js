@@ -9,7 +9,7 @@ geoloqi.init({
   clientSecret: Config.clientSecret,
   pushAccount: "geoloqi@gmail.com",
   pushIcon: "push_icon",
-  trackingProfile: "PASSIVE"
+  trackingProfile: "ROUGH"
 },{
   onSuccess: function(){
     Ti.API.info("Tracking Profile: " + geoloqi.tracker.getProfile());
@@ -31,7 +31,7 @@ geoloqi.init({
 	        geoloqi.iOS.handlePush(data);
 	      },
 	      success:function(data){
-	        geoloqi.iOS.registerDeviceToken(data.deviceToken);
+	        geoloqi.iOS.registerDeviceToken(data.deviceToken, "live");
 	      },
 	      error: function(data){
 	        Ti.API.error("Could Not Register For Push" + data.error + data.type);

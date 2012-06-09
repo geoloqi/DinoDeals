@@ -183,8 +183,8 @@ function init(){
 activityWindow.add(activityIndicator);
 
 Ti.API.info("Listen");
-Ti.API.info(typeof geoloqi.session);
-Ti.API.info(typeof geoloqi.session.getAccessToken());
+// Ti.API.info(typeof geoloqi.session);
+// Ti.API.info(typeof geoloqi.session.getAccessToken());
 if(typeof geoloqi.session !== "undefined"){
 	init();
 } else {
