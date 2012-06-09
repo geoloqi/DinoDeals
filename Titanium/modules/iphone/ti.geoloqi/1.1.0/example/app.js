@@ -259,14 +259,14 @@ scrollViewer.add(btnGetProfile);
 
 
 var btnSetProfile=Ti.UI.createButton({
-                                     title:'SET PROFILE(PASSIVE)',
+                                     title:'SET PROFILE(ADAPTIVE)',
                                      top:290,
                                      height:30,
                                      width:200
                                      });
 
 btnSetProfile.addEventListener('click',function(){
-                               alert(geoloqi.tracker.setProfile("PASSIVE"));
+                               alert(geoloqi.tracker.setProfile("ADAPTIVE"));
                                });
 
 scrollViewer.add(btnSetProfile);
@@ -414,7 +414,7 @@ var button11=Ti.UI.createButton({
                                 });
 
 button11.addEventListener('click',function(){
-                          alert(geoloqi.tracker.canSwitchToProfile("PASSIVE"));
+                          alert(geoloqi.tracker.canSwitchToProfile("ADAPTIVE"));
                           });
 
 scrollViewer.add(button11);
