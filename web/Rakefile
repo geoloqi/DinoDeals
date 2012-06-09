@@ -133,13 +133,22 @@ namespace :deals do
 		    radius_in_miles = lp[:radius] / 1609.3
 
 		    # Get nearby deals from Sqoot
-		    offers = sqoot.offers(:location => "#{lp[:latitude]},#{lp[:longitude]}",
-		                          :radius => radius_in_miles,
-		                          :national => false,
-		                          :categories => CATEGORIES[layer[:name]],
-		                          :order => 'distance',
-		                          :per_page => 250)[:offers]
-		    
+		    begin
+			    offers = sqoot.offers(:location => "#{lp[:latitude]},#{lp[:longitude]}",
+			                          :radius => radius_in_miles,
+			                          :national => false,
+			                          :categories => CATEGORIES[layer[:name]],
+			                          :order => 'distance',
+			                          :per_page => 250)[:offers]
+		    rescue Exception => e
+	        # TODO error out nicer
+	        STDERR.puts "=========="
+	        STDERR.puts "ERROR FETCHING DEALS"
+	        STDERR.puts e.message
+	        STDERR.puts "=========="
+	        next
+		    end
+
 		    if offers.size
 			    offers.each do |offer|
 			    
@@ -152,10 +161,10 @@ namespace :deals do
 			      begin
 			        text = (!offer[:short_title].nil? && offer[:short_title].length > 0) ? offer[:short_title] : offer[:title]
 			        base_string = "You found a new deal"
-			        end_string = (offer[:locations][0][:name]) ? " at #{offer[:locations][0][:name]}".strip : "" 
+			        end_string = offer[:locations][0][:name] ? " at #{offer[:locations][0][:name]}" : "" 
   						trigger_data = { :key => offer[:id],
 			                         :type => 'message',
-			                         :text => "#{base_string}#{end_string}",
+			                         :text => "#{base_string}#{end_string}".strip,
 			                         :url => "dinodeals://open?url=#{Rack::Utils.escape(offer[:url])}",
 			                         :latitude => offer[:locations][0][:latitude],
 			                         :longitude => offer[:locations][0][:longitude],
@@ -170,7 +179,15 @@ namespace :deals do
 			                         	}
 			                        }
 			        puts "\n\ncreating - #{text}"
-			        puts geoloqi.post 'trigger/create', trigger_data
+			        trigger = geoloqi.post 'trigger/create', trigger_data
+			        puts trigger
+
+			        # If the trigger already existed with that key, then update it
+			        if geoloqi.response.status == 409
+			        	# Only send fields that existed in the trigger response, we don't need to send the place_* fields in the update request
+			        	puts geoloqi.post "trigger/update/#{trigger[:trigger_id]}", trigger_data.reject {|key,value| !trigger[key]}
+			        end
+
 			      rescue Geoloqi::ApiError => gae
 			        # TODO error out nicer
 			        STDERR.puts "=========="
