@@ -7,7 +7,7 @@ Ti.include('config.js');
 geoloqi.init({
   clientId: Config.clientId,
   clientSecret: Config.clientSecret,
-  pushAccount: "geoloqi@gmail.com",
+  pushSender: "00000001",
   pushIcon: "push_icon",
   trackingProfile: "ROUGH"
 },{
