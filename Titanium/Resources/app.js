@@ -31,7 +31,8 @@ geoloqi.init({
 	        geoloqi.iOS.handlePush(data);
 	      },
 	      success:function(data){
-	        geoloqi.iOS.registerDeviceToken(data.deviceToken, "live");
+	      	// TODO: Change to "live" when building your release version of the app
+	        geoloqi.iOS.registerDeviceToken(data.deviceToken, "dev");
 	      },
 	      error: function(data){
 	        Ti.API.error("Could Not Register For Push" + data.error + data.type);
