@@ -1,6 +1,0 @@
-geoloqi:
-  client_id: <%= ENV["geoloqi_client_id"] %>
-  client_secret: <%= ENV["geoloqi_client_secret"] %>
-  app_access_token: <%= ENV["geoloqi_application_token"] %>
-sqoot:
-  affiliate_token: <%= ENV["sqoot_affiliate_token"] %>

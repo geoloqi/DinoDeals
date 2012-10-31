@@ -1,4 +1,4 @@
-	# Install
+# Install
 
 1. `gem install heroku`
 2. `heroku create dino-deals-server`
