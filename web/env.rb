@@ -3,11 +3,22 @@ Bundler.require
 Bundler.require :development if development?
 
 # This one-liner will interpolate your config.yml file with ERB to fill in environment variables
-CONFIG = YAML.load(ERB.new(File.read(File.join(File.dirname(__FILE__), 'config.yml'))).result)
+#CONFIG = YAML.load(ERB.new(File.read(File.join(File.dirname(__FILE__), "config.yml"))).result)
+
+CONFIG = {
+  geoloqi: {
+    client_id: ENV["geoloqi_client_id"],
+    client_secret: ENV["geoloqi_client_secret"],
+    app_access_token: ENV["geoloqi_application_token"]
+  },
+  sqoot: {
+    affiliate_token: ENV["sqoot_affiliate_token"]
+  }
+}
 
 # Configure the Sqoot gem
 Sqoot.configure do |config|
-  config.affiliate_token = CONFIG['sqoot']['affiliate_token']
+  config.affiliate_token = CONFIG[:sqoot][:affiliate_token]
   config.authentication_token = 'foo'
 end
 
@@ -37,11 +48,11 @@ DEAL_SEARCH_RADIUS = 10000
 DEAL_PLACE_RADIUS =  800
 
 # Configure Geoloqi gem
-Geoloqi.config :client_id => CONFIG['geoloqi']['client_id'], :client_secret => CONFIG['geoloqi']['client_secret']
+Geoloqi.config :client_id => CONFIG[:geoloqi][:client_id], :client_secret => CONFIG[:geoloqi][:client_secret]
 
 # Helper for quickly accessing a list of all layers made by the applications
 def get_layers
-  Geoloqi::Session.new(:access_token => CONFIG['geoloqi']['app_access_token']).get('layer/list')[:layers]
+  Geoloqi::Session.new(:access_token => CONFIG[:geoloqi][:app_access_token]).get('layer/list')[:layers]
 end
 
 
@@ -50,7 +61,7 @@ end
 
 # Remove this when the response attr is added back to the gem
 # See https://github.com/geoloqi/geoloqi-ruby/pull/3
-
+=begin
 module Geoloqi
   class Session
     attr_reader :response
@@ -91,3 +102,4 @@ module Geoloqi
 
   end
 end
+=end

@@ -1,13 +1,22 @@
 This folder is the a complete DinoDeals Titanium Project. Just import it into Titanium and fill out the `Resources/config.js` file with your Geoloqi `clientId` and `clientSecret`.
 
-Build the project and thats it!
+Now build the project and thats it!
 
 Geoloqi Titanium Documentation : https://developers.geoloqi.com/titanium
 
+## Setup
+
+Rename `Resources/config-template.js` to `config.js` and add your geoloqi API Key to `clientId` and  your Geoloqi API Secret to `clientSecret`.
+
+`pushAccount` is the email you used to register for Google Cloud Messaging.
+
+You will need to edit your application before you can recive push notifications. - https://developers.geoloqi.com/account/applications
+
 ## Deploy the DinoDeals Server
+
 You will also need to deploy th DinoDeals server. Follow the direction in the readme at https://github.com/geoloqi/DinoDeals/tree/master/web to deploy the server to Heroku for free.
 
-Once you have deployed the server asd the url of the server to `config.js` as `baseURL` (trailing slash required).
+Once you have deployed the server add the url of the server to `config.js` as `baseURL` (trailing slash required).
 
 ## Android Instructions
 

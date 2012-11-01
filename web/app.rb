@@ -1,7 +1,7 @@
 # Require the environment file
-require File.join(File.dirname(__FILE__), 'env')
+require './env.rb'
 
-# Before each route is fun create a new geoloqi session for the user.
+# Before each route is run create a new geoloqi session for the user.
 before do
   http_auth = request.env['HTTP_AUTHORIZATION'] || params[:lq_access_token]
   @geoloqi = Geoloqi::Session.new :access_token => (http_auth ? http_auth.gsub('Bearer ', '') : nil)
@@ -16,7 +16,7 @@ end
 get '/api/categories' do
   
   # Get a list of all the layers created by the application
-  layers = Geoloqi::Session.new(:access_token => CONFIG['geoloqi']['app_access_token']).get('layer/list')[:layers]
+  layers = Geoloqi::Session.new(:access_token => CONFIG[:geoloqi][:app_access_token]).get('layer/list')[:layers]
   
   # Get a list of all the layers the user is  subscribed to
   subscribed = @geoloqi.get('layer/subscriptions')

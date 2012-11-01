@@ -127,12 +127,15 @@ var DinoDeals = {
   });
 
   // create a window to hold a map of nearby deals
+  // the map will show neary deals but isn't ready quite yet
+  /*
   DinoDeals.Windows.map = Ti.UI.createWindow({
     url: "ui/windows/map.js",
     title: "Nearby Deals",
     barColor: "#15a6e5",
     backgroundColor:"#fff",
   });
+  */
   
   // create a window to hold list of categories
   DinoDeals.Windows.categories = Ti.UI.createWindow({

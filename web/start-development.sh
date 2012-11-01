@@ -1,2 +1,2 @@
 #!/bin/bash
-bundle exec shotgun -s puma
+bundle exec rackup -p 9000
