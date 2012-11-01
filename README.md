@@ -11,4 +11,6 @@ Read about our Titanium module here:
 
 http://developers.geoloqi.com/titanium
 
+## Issues
 
+Please file any issues here on Github or join the #geoloqi channel on Freenode.
