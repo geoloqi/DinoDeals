@@ -12,6 +12,9 @@ Rename `Resources/config-template.js` to `config.js` and add your geoloqi API Ke
 
 You will need to edit your application before you can recive push notifications. - https://developers.geoloqi.com/account/applications
 
+* Android Push Documentation - https://developers.geoloqi.com/android/push-notifications
+* iOS Push Documentation - 
+
 ## Deploy the DinoDeals Server
 
 You will also need to deploy th DinoDeals server. Follow the direction in the readme at https://github.com/geoloqi/DinoDeals/tree/master/web to deploy the server to Heroku for free.
