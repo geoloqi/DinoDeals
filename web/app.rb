@@ -29,7 +29,7 @@ get '/api/categories' do
     resp[:categories].push({
       :id => l[:layer_id],
       :name => l[:name],
-      :subscribed => !subscribed.select {|s| s[:layer_id] == l[:layer_id]}.empty?
+      :subscribed => subscribed.any? {|s| s[:layer_id] == l[:layer_id]}
     })
   end
   
