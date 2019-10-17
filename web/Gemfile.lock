@@ -18,7 +18,7 @@ GEM
       json
       rack
     hashie (1.2.0)
-    json (1.7.5)
+    json (2.2.0)
     method_source (0.8.1)
     multipart-post (1.1.5)
     pry (0.9.10)
