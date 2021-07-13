@@ -1,7 +1,8 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    addressable (2.3.2)
+    addressable (2.8.0)
+      public_suffix (>= 2.0.2, < 5.0)
     coderay (1.0.8)
     daemons (1.1.9)
     eventmachine (1.0.0)
@@ -27,6 +28,7 @@ GEM
       slop (~> 3.3.1)
     pry-nav (0.2.2)
       pry (~> 0.9.10)
+    public_suffix (4.0.6)
     rack (1.4.1)
     rack-protection (1.2.0)
       rack
